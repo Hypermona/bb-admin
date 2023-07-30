@@ -18,6 +18,8 @@
  
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
+
+    --overlay: 214.3 31.8% 81.4%;
  
     --primary: 222.2 47.4% 11.2%;
     --primary-foreground: 210 40% 98%;
@@ -51,6 +53,8 @@
  
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
+
+    --overlay: 217.2 100% 11%;
  
     --primary: 210 40% 98%;
     --primary-foreground: 222.2 47.4% 11.2%;
@@ -75,4 +79,7 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+[contenteditable]:focus {
+  outline: 0px solid transparent;
 }
