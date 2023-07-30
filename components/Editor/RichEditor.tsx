@@ -1,76 +1,78 @@
-import ExampleTheme from "./themes/defaultTheme";
+/**
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ */
+
+import { $createLinkNode } from "@lexical/link";
+import { $createListItemNode, $createListNode } from "@lexical/list";
 import { LexicalComposer } from "@lexical/react/LexicalComposer";
-import { RichTextPlugin } from "@lexical/react/LexicalRichTextPlugin";
-import { ContentEditable } from "@lexical/react/LexicalContentEditable";
-import { HistoryPlugin } from "@lexical/react/LexicalHistoryPlugin";
-import { AutoFocusPlugin } from "@lexical/react/LexicalAutoFocusPlugin";
-import LexicalErrorBoundary from "@lexical/react/LexicalErrorBoundary";
-import TreeViewPlugin from "./plugins/TreeViewPlugin";
-import ToolbarPlugin from "./plugins/ToolbarPlugin";
-import { HeadingNode, QuoteNode } from "@lexical/rich-text";
-import { TableCellNode, TableNode, TableRowNode } from "@lexical/table";
-import { ListItemNode, ListNode } from "@lexical/list";
-import { CodeHighlightNode, CodeNode } from "@lexical/code";
-import { AutoLinkNode, LinkNode } from "@lexical/link";
-import { LinkPlugin } from "@lexical/react/LexicalLinkPlugin";
-import { ListPlugin } from "@lexical/react/LexicalListPlugin";
-import { MarkdownShortcutPlugin } from "@lexical/react/LexicalMarkdownShortcutPlugin";
-import { TRANSFORMERS } from "@lexical/markdown";
+import { $createHeadingNode, $createQuoteNode } from "@lexical/rich-text";
+import { $createParagraphNode, $createTextNode, $getRoot } from "lexical";
+import * as React from "react";
 
-import ListMaxIndentLevelPlugin from "./plugins/ListMaxIndentLevelPlugin";
-import CodeHighlightPlugin from "./plugins/CodeHighlightPlugin";
-import AutoLinkPlugin from "./plugins/AutoLinkPlugin";
+import { isDevPlayground } from "./appSettings";
+import { SettingsContext, useSettings } from "./context/SettingsContext";
+import { SharedAutocompleteContext } from "./context/SharedAutocompleteContext";
+import { SharedHistoryContext } from "./context/SharedHistoryContext";
+import Editor from "./Editor";
+import logo from "./images/logo.svg";
+import PlaygroundNodes from "./nodes/PlaygroundNodes";
+import DocsPlugin from "./plugins/DocsPlugin";
+import PasteLogPlugin from "./plugins/PasteLogPlugin";
+import { TableContext } from "./plugins/TablePlugin";
+import TestRecorderPlugin from "./plugins/TestRecorderPlugin";
+import TypingPerfPlugin from "./plugins/TypingPerfPlugin";
+import Settings from "./Settings";
+import PlaygroundEditorTheme from "./themes/PlaygroundEditorTheme";
 
-function Placeholder() {
-  return <div className="editor-placeholder">Enter some rich text...</div>;
+console.warn(
+  "If you are profiling the playground app, please ensure you turn off the debug view. You can disable it by pressing on the settings control in the bottom-left of your screen and toggling the debug view setting."
+);
+
+
+function App(): JSX.Element {
+  const {
+    settings: { isCollab, emptyEditor, measureTypingPerf },
+  } = useSettings();
+
+  const initialConfig = {
+    editorState: null,
+    namespace: "Playground",
+    nodes: [...PlaygroundNodes],
+    onError: (error: Error) => {
+      throw error;
+    },
+    theme: PlaygroundEditorTheme,
+  };
+
+  return (
+    <LexicalComposer initialConfig={initialConfig}>
+      <SharedHistoryContext>
+        <TableContext>
+          <SharedAutocompleteContext>
+            <div className="editor-shell">
+              <Editor />
+            </div>
+            {/* <Settings /> */}
+            {/* {isDevPlayground ? <DocsPlugin /> : null} */}
+            {/* {isDevPlayground ? <PasteLogPlugin /> : null}
+            {isDevPlayground ? <TestRecorderPlugin /> : null} */}
+
+            {/* {measureTypingPerf ? <TypingPerfPlugin /> : null} */}
+          </SharedAutocompleteContext>
+        </TableContext>
+      </SharedHistoryContext>
+    </LexicalComposer>
+  );
 }
 
-const editorConfig = {
-  // The editor theme
-  theme: ExampleTheme,
-  namespace:"",
-  // Handling of errors during update
-  onError(error: Error) {
-    throw error;
-  },
-  // Any custom nodes go here
-  nodes: [
-    HeadingNode,
-    ListNode,
-    ListItemNode,
-    QuoteNode,
-    CodeNode,
-    CodeHighlightNode,
-    TableNode,
-    TableCellNode,
-    TableRowNode,
-    AutoLinkNode,
-    LinkNode,
-  ],
-};
-
-export default function RichEditor() {
+export default function PlaygroundApp(): JSX.Element {
   return (
-    <LexicalComposer initialConfig={editorConfig}>
-      <div className="editor-container">
-        <ToolbarPlugin />
-        <div className="editor-inner">
-          <RichTextPlugin
-            contentEditable={<ContentEditable className="editor-input" />}
-            placeholder={<Placeholder />}
-            ErrorBoundary={LexicalErrorBoundary}
-          />
-          <HistoryPlugin />
-          {/* <TreeViewPlugin /> */}
-          <AutoFocusPlugin />
-          <CodeHighlightPlugin />
-          <ListPlugin />
-          <LinkPlugin />
-          <AutoLinkPlugin />
-          <ListMaxIndentLevelPlugin maxDepth={7} />
-          <MarkdownShortcutPlugin transformers={TRANSFORMERS} />
-        </div>
-      </div>
-    </LexicalComposer>
+    <SettingsContext>
+      <App />
+    </SettingsContext>
   );
 }
