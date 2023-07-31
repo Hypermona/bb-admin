@@ -29,13 +29,13 @@
 }
 .PlaygroundEditorTheme__h1 {
   font-size: 24px;
-  color: rgb(5, 5, 5);
+  color: rgb(221, 220, 220);
   font-weight: 400;
   margin: 0;
 }
 .PlaygroundEditorTheme__h2 {
   font-size: 15px;
-  color: rgb(101, 103, 107);
+  color: rgb(180, 182, 187);
   font-weight: 700;
   margin: 0;
   text-transform: uppercase;
@@ -72,7 +72,7 @@
   vertical-align: super;
 }
 .PlaygroundEditorTheme__textCode {
-  background-color: rgb(240, 242, 245);
+  background-color: rgb(37, 48, 65);
   padding: 1px 0.25rem;
   font-family: Menlo, Consolas, Monaco, monospace;
   font-size: 94%;
@@ -90,7 +90,7 @@
   cursor: pointer;
 }
 .PlaygroundEditorTheme__code {
-  background-color: rgb(240, 242, 245);
+  background-color: rgb(41, 53, 69);
   font-family: Menlo, Consolas, Monaco, monospace;
   display: block;
   padding: 8px 8px 8px 52px;
@@ -106,7 +106,7 @@
 .PlaygroundEditorTheme__code:before {
   content: attr(data-gutter);
   position: absolute;
-  background-color: #eee;
+  background-color: #47435f;
   left: 0;
   top: 0;
   border-right: 1px solid #ccc;
@@ -161,7 +161,7 @@
   top: 0;
 }
 .PlaygroundEditorTheme__tableCellHeader {
-  background-color: #f2f3f5;
+  background-color: #44464b;
   text-align: start;
 }
 .PlaygroundEditorTheme__tableCellSelected {

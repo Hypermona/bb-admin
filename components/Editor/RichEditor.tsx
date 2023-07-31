@@ -1,32 +1,17 @@
-/**
- * Copyright (c) Meta Platforms, Inc. and affiliates.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- *
- */
 
-import { $createLinkNode } from "@lexical/link";
-import { $createListItemNode, $createListNode } from "@lexical/list";
 import { LexicalComposer } from "@lexical/react/LexicalComposer";
-import { $createHeadingNode, $createQuoteNode } from "@lexical/rich-text";
-import { $createParagraphNode, $createTextNode, $getRoot } from "lexical";
+import { EditorState, LexicalEditor } from "lexical";
 import * as React from "react";
 
-import { isDevPlayground } from "./appSettings";
-import { SettingsContext, useSettings } from "./context/SettingsContext";
+import { SettingsContext } from "./context/SettingsContext";
 import { SharedAutocompleteContext } from "./context/SharedAutocompleteContext";
 import { SharedHistoryContext } from "./context/SharedHistoryContext";
 import Editor from "./Editor";
-import logo from "./images/logo.svg";
 import PlaygroundNodes from "./nodes/PlaygroundNodes";
-import DocsPlugin from "./plugins/DocsPlugin";
-import PasteLogPlugin from "./plugins/PasteLogPlugin";
 import { TableContext } from "./plugins/TablePlugin";
-import TestRecorderPlugin from "./plugins/TestRecorderPlugin";
-import TypingPerfPlugin from "./plugins/TypingPerfPlugin";
-import Settings from "./Settings";
 import PlaygroundEditorTheme from "./themes/PlaygroundEditorTheme";
+import { OnChangePlugin } from "@lexical/react/LexicalOnChangePlugin";
+import { $generateHtmlFromNodes } from "@lexical/html";
 
 console.warn(
   "If you are profiling the playground app, please ensure you turn off the debug view. You can disable it by pressing on the settings control in the bottom-left of your screen and toggling the debug view setting."
@@ -34,10 +19,7 @@ console.warn(
 
 
 function App(): JSX.Element {
-  const {
-    settings: { isCollab, emptyEditor, measureTypingPerf },
-  } = useSettings();
-
+  
   const initialConfig = {
     editorState: null,
     namespace: "Playground",
@@ -47,7 +29,16 @@ function App(): JSX.Element {
     },
     theme: PlaygroundEditorTheme,
   };
+  const onStateChange=(editorState:EditorState,editor: LexicalEditor)=>{
+    editor.update(() => {
+    const editorState = editor.getEditorState();
+    const jsonString = JSON.stringify(editorState);
+    console.log('jsonString', jsonString);
 
+    const htmlString = $generateHtmlFromNodes(editor);
+    console.log('htmlString', htmlString);
+  });
+  }
   return (
     <LexicalComposer initialConfig={initialConfig}>
       <SharedHistoryContext>
@@ -56,12 +47,7 @@ function App(): JSX.Element {
             <div className="editor-shell">
               <Editor />
             </div>
-            {/* <Settings /> */}
-            {/* {isDevPlayground ? <DocsPlugin /> : null} */}
-            {/* {isDevPlayground ? <PasteLogPlugin /> : null}
-            {isDevPlayground ? <TestRecorderPlugin /> : null} */}
-
-            {/* {measureTypingPerf ? <TypingPerfPlugin /> : null} */}
+            <OnChangePlugin onChange={onStateChange} />
           </SharedAutocompleteContext>
         </TableContext>
       </SharedHistoryContext>

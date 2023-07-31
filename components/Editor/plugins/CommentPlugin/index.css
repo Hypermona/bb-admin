@@ -11,10 +11,10 @@
   display: block;
   position: fixed;
   border-radius: 20px;
-  background-color: white;
+  background-color: rgb(25, 25, 49);
   width: 40px;
   height: 60px;
-  box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 3px rgba(55, 31, 135, 0.2);
   z-index: 10;
 }
 
@@ -31,7 +31,7 @@
 }
 
 .CommentPlugin_AddCommentBox_button:hover {
-  background-color: #f6f6f6;
+  background-color: #29243f;
 }
 
 i.add-comment {
@@ -54,8 +54,8 @@ i.add-comment {
   position: fixed;
   width: 250px;
   min-height: 80px;
-  background-color: #fff;
-  box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.1);
+  background-color: #252143;
+  box-shadow: 0 0 5px 0 rgba(68, 46, 197, 0.1);
   border-radius: 5px;
   z-index: 24;
   animation: show-input-box 0.4s ease;
@@ -71,8 +71,8 @@ i.add-comment {
   top: 0;
   left: calc(50% + 0.25em);
   box-sizing: border-box;
-  border: 0.5em solid black;
-  border-color: transparent transparent #fff #fff;
+  border: 0.5em solid rgb(31, 17, 92);
+  border-color: transparent transparent #1e0808 #100c2d;
   transform-origin: 0 0;
   transform: rotate(135deg);
   box-shadow: -3px 3px 3px 0 rgba(0, 0, 0, 0.05);
@@ -120,7 +120,7 @@ i.add-comment {
 
 .CommentPlugin_CommentInputBox_Button[disabled]:hover {
   opacity: 0.5;
-  background-color: #eee;
+  background-color: #0e122e;
 }
 
 .CommentPlugin_CommentInputBox_EditorContainer {
@@ -131,11 +131,11 @@ i.add-comment {
 
 .CommentPlugin_CommentInputBox_Editor {
   position: relative;
-  border: 1px solid #ccc;
-  background-color: #fff;
+  border: 1px solid #111759;
+  background-color: #181136;
   border-radius: 5px;
   font-size: 15px;
-  caret-color: rgb(5, 5, 5);
+  caret-color: rgb(165, 167, 223);
   display: block;
   padding: 9px 10px 10px 9px;
   min-height: 80px;
@@ -149,7 +149,7 @@ i.add-comment {
   position: fixed;
   top: 10px;
   right: 10px;
-  background-color: #ddd;
+  background-color: #291b48;
   border-radius: 10px;
 }
 
@@ -175,7 +175,7 @@ i.comments {
 }
 
 .CommentPlugin_ShowCommentsButton.active {
-  background-color: #ccc;
+  background-color: #28204b;
 }
 
 .CommentPlugin_CommentsPanel {
@@ -184,7 +184,7 @@ i.comments {
   width: 300px;
   height: calc(100% - 88px);
   top: 88px;
-  background-color: #fff;
+  background-color: #14143d;
   border-top-left-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   animation: show-comments 0.2s ease;
@@ -207,21 +207,21 @@ i.comments {
   padding-top: 10px;
   margin: 0;
   height: 34px;
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid #29278b;
   font-size: 20px;
   display: block;
   width: 100%;
-  color: #444;
+  color: #e6e3fa;
   overflow: hidden;
 }
 
 .CommentPlugin_CommentsPanel_Editor {
   position: relative;
-  border: 1px solid #ccc;
-  background-color: #fff;
+  border: 1px solid #1c299e;
+  background-color: #221647;
   border-radius: 5px;
   font-size: 15px;
-  caret-color: rgb(5, 5, 5);
+  caret-color: rgb(129, 142, 239);
   display: block;
   padding: 9px 10px 10px 9px;
   min-height: 20px;

@@ -1,29 +1,3 @@
-header {
-  max-width: 580px;
-  margin: auto;
-  position: relative;
-  display: flex;
-  justify-content: center;
-}
-
-header a {
-  max-width: 220px;
-  margin: 20px 0 0 0;
-  display: block;
-}
-
-header img {
-  display: block;
-  height: 100%;
-  width: 100%;
-}
-
-header h1 {
-  text-align: left;
-  color: #333;
-  display: inline-block;
-  margin: 20px 0 0 0;
-}
 
 .editor-shell {
   margin: 20px auto;
@@ -278,7 +252,7 @@ pre::-webkit-scrollbar-thumb {
 .typeahead-popover li {
   margin: 0 8px 0 8px;
   padding: 8px;
-  color: #050505;
+  color: #e9e9e9;
   cursor: pointer;
   line-height: 16px;
   font-size: 15px;
@@ -286,7 +260,7 @@ pre::-webkit-scrollbar-thumb {
   align-content: center;
   flex-direction: row;
   flex-shrink: 0;
-  background-color: #fff;
+  background-color: #111111;
   border-radius: 8px;
   border: 0;
 }
@@ -307,7 +281,7 @@ pre::-webkit-scrollbar-thumb {
 }
 
 .typeahead-popover li:hover {
-  background-color: #eee;
+  background-color: #2d2d2d;
 }
 
 .typeahead-popover li .text {
@@ -419,7 +393,7 @@ i.horizontal-rule {
 }
 
 .icon.table {
-  background-color: #6c757d;
+  background-color: #2c3034;
   mask-image: url(images/icons/table.svg);
   -webkit-mask-image: url(images/icons/table.svg);
   mask-repeat: no-repeat;
@@ -543,7 +517,7 @@ i.prettier-error {
 
 .link-editor .button.active,
 .toolbar .button.active {
-  background-color: rgb(223, 232, 250);
+  background-color: rgb(44, 45, 48);
 }
 
 .link-editor .link-input {
@@ -553,9 +527,9 @@ i.prettier-error {
   margin: 12px 12px;
   padding: 8px 12px;
   border-radius: 15px;
-  background-color: #eee;
+  background-color: #141414;
   font-size: 15px;
-  color: rgb(5, 5, 5);
+  color: rgb(236, 236, 236);
   border: 0;
   outline: 0;
   position: relative;
@@ -569,7 +543,7 @@ i.prettier-error {
   padding: 8px 12px;
   border-radius: 15px;
   font-size: 15px;
-  color: rgb(5, 5, 5);
+  color: rgb(228, 228, 228);
   border: 0;
   outline: 0;
   position: relative;
@@ -612,10 +586,11 @@ i.prettier-error {
 
 .link-editor div.link-cancel {
   background-image: url(images/icons/close.svg);
-  background-size: 16px;
+  background-size: 12px;
   background-position: center;
   background-repeat: no-repeat;
   width: 35px;
+  color: white;
   vertical-align: -0.25em;
   margin-right: 28px;
   position: absolute;
@@ -627,7 +602,7 @@ i.prettier-error {
 
 .link-editor div.link-confirm {
   background-image: url(images/icons/success-alt.svg);
-  background-size: 16px;
+  background-size: 12px;
   background-position: center;
   background-repeat: no-repeat;
   width: 35px;
@@ -851,9 +826,9 @@ i.prettier-error {
 
 .switch {
   display: block;
-  color: #444;
+  color: #c5c5c5;
   margin: 5px 0;
-  background-color: rgba(238, 238, 238, 0.7);
+  background-color: rgba(32, 32, 32, 0.7);
   padding: 5px 10px;
   border-radius: 10px;
 }
@@ -876,7 +851,7 @@ i.prettier-error {
 }
 
 .switch button {
-  background-color: rgb(206, 208, 212);
+  background-color: rgb(43, 43, 43);
   height: 24px;
   box-sizing: border-box;
   border-radius: 12px;
@@ -902,7 +877,7 @@ i.prettier-error {
   width: 20px;
   height: 20px;
   border-radius: 12px;
-  background-color: white;
+  background-color: rgb(43, 43, 43);
   transition: transform 0.2s;
 }
 
@@ -953,9 +928,9 @@ i.prettier-error {
   padding: 0;
   margin: 0;
   border-top: 1px solid #fff;
-  background-color: rgba(255, 255, 255, 0.9);
+  background-color: rgba(31, 31, 31, 0.9);
   min-width: 100px;
-  color: #000;
+  color: #e6e5e5;
   overflow: hidden;
 }
 
@@ -1126,9 +1101,9 @@ i.prettier-error {
 
 .editor-shell .inline-editor-image .image-caption-container {
   display: block;
-  background-color: #f4f4f4;
+  background-color: #212121;
   min-width: 100%;
-  color: #000;
+  color: #e4e1e1;
   overflow: hidden;
 }
 
@@ -1261,7 +1236,7 @@ i.prettier-error {
   border: 0;
   position: relative;
   border-radius: 15px;
-  color: #222;
+  color: #d9d9d9;
   display: inline-block;
   cursor: pointer;
 }
@@ -1282,14 +1257,14 @@ i.chevron-down {
   position: relative;
   margin-left: 5px;
   border-radius: 15px;
-  color: #222;
+  color: #dbdada;
   display: inline-block;
   cursor: pointer;
 }
 
 .action-button:hover {
   background-color: rgb(50, 47, 65);
-  color: #000;
+  color: #e6e4e4;
 }
 
 .action-button-mic.active {
@@ -1304,76 +1279,21 @@ button.action-button:disabled {
 
 @keyframes mic-pulsate-color {
   0% {
-    background-color: #ffdcdc;
+    background-color: #1c1818;
   }
 
   50% {
-    background-color: #ff8585;
+    background-color: #675656;
   }
 
   100% {
-    background-color: #ffdcdc;
+    background-color: #695858;
   }
-}
-
-.debug-timetravel-panel {
-  overflow: hidden;
-  padding: 0 0 10px 0;
-  margin: auto;
-  display: flex;
-}
-
-.debug-timetravel-panel-slider {
-  padding: 0;
-  flex: 8;
-}
-
-.debug-timetravel-panel-button {
-  padding: 0;
-  border: 0;
-  background: none;
-  flex: 1;
-  color: #fff;
-  font-size: 12px;
-}
-
-.debug-timetravel-panel-button:hover {
-  text-decoration: underline;
-}
-
-.debug-timetravel-button {
-  border: 0;
-  padding: 0;
-  font-size: 12px;
-  top: 10px;
-  right: 15px;
-  position: absolute;
-  background: none;
-  color: #fff;
-}
-
-.debug-timetravel-button:hover {
-  text-decoration: underline;
-}
-
-.debug-treetype-button {
-  border: 0;
-  padding: 0;
-  font-size: 12px;
-  top: 10px;
-  right: 85px;
-  position: absolute;
-  background: none;
-  color: #fff;
-}
-
-.debug-treetype-button:hover {
-  text-decoration: underline;
 }
 
 .connecting {
   font-size: 15px;
-  color: #999;
+  color: #c3c2c2;
   overflow: hidden;
   position: absolute;
   text-overflow: ellipsis;
@@ -1399,7 +1319,7 @@ button.action-button:disabled {
   flex-wrap: wrap;
   justify-content: flex-end;
   /* color:#fff; */
-  /* background: #fff; */
+  background: #050505;
   padding: 4px;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
@@ -1513,7 +1433,7 @@ button.action-button:disabled {
 
 .toolbar .divider {
   width: 0px;
-  background-color: #eee;
+  background-color: #aeaeae;
   margin: 0 4px;
 }
 
@@ -1698,7 +1618,7 @@ hr:after {
   content: '';
   display: block;
   height: 2px;
-  background-color: #ccc;
+  background-color: #383838;
   line-height: 2px;
 }
 

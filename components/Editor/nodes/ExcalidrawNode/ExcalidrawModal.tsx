@@ -229,6 +229,7 @@ export default function ExcalidrawModal({
           <_Excalidraw
             onChange={onChange}
             ref={excaliDrawSceneRef}
+            theme={'dark'}
             initialData={{
               appState: initialAppState || {isLoading: false},
               elements: initialElements,
