@@ -266,7 +266,7 @@ function getSelectedIDs(
     return [];
   }
   const {startX, endY, endX, startY} = rect;
-  const ids = [];
+  const ids:string[] = [];
 
   for (let x = startX; x <= endX; x++) {
     for (let y = startY; y <= endY; y++) {

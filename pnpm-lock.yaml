@@ -44,6 +44,7 @@ specifiers:
   prettier: ^3.0.0
   react: 18.2.0
   react-dom: 18.2.0
+  react-error-boundary: ^4.0.10
   react-hook-form: ^7.45.2
   tailwind-merge: ^1.14.0
   tailwindcss: 3.3.3
@@ -97,6 +98,7 @@ dependencies:
   prettier: 3.0.0
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
+  react-error-boundary: 4.0.10_react@18.2.0
   react-hook-form: 7.45.2_react@18.2.0
   tailwind-merge: 1.14.0
   tailwindcss: 3.3.3
@@ -3277,6 +3279,15 @@ packages:
   /react-error-boundary/3.1.4_react@18.2.0:
     resolution: {integrity: sha512-uM9uPzZJTF6wRQORmSrvOIgt4lJ9MC1sNgEOj2XGsDTRE4kmpWxg7ENK9EWNKJRMAOY9z0MuF4yIfl6gp4sotA==}
     engines: {node: '>=10', npm: '>=6'}
+    peerDependencies:
+      react: '>=16.13.1'
+    dependencies:
+      '@babel/runtime': 7.22.6
+      react: 18.2.0
+    dev: false
+
+  /react-error-boundary/4.0.10_react@18.2.0:
+    resolution: {integrity: sha512-pvVKdi77j2OoPHo+p3rorgE43OjDWiqFkaqkJz8sJKK6uf/u8xtzuaVfj5qJ2JnDLIgF1De3zY5AJDijp+LVPA==}
     peerDependencies:
       react: '>=16.13.1'
     dependencies:
