@@ -22,7 +22,6 @@ import * as React from 'react';
 import {useEffect, useRef} from 'react';
 import useLayoutEffect from '../useLayoutEffect';
 
-import {createWebsocketProvider} from '../collaboration';
 import {useSharedHistoryContext} from '../context/SharedHistoryContext';
 import StickyEditorTheme from '../themes/StickyEditorTheme';
 import ContentEditable from '../ui/ContentEditable';
@@ -238,22 +237,14 @@ export default function StickyComponent({
         <LexicalNestedComposer
           initialEditor={caption}
           initialTheme={StickyEditorTheme}>
-          {isCollabActive ? (
-            <CollaborationPlugin
-              id={caption.getKey()}
-              providerFactory={createWebsocketProvider}
-              shouldBootstrap={true}
-            />
-          ) : (
             <HistoryPlugin externalHistoryState={historyState} />
-          )}
           <PlainTextPlugin
             contentEditable={
               <ContentEditable className="StickyNode__contentEditable" />
             }
             placeholder={
               <Placeholder className="StickyNode__placeholder">
-                What's up?
+                Whats up?
               </Placeholder>
             }
             ErrorBoundary={LexicalErrorBoundary}
