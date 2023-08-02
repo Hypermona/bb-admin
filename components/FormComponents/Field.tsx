@@ -19,7 +19,7 @@ const RenderFieldByType = ({ field, f }: Props) => {
       return <Textarea {...field} />;
     case FILE:
       return <Input type={f.type} onChange={(e) => field.onChange(e.target.files)} />;
-    case RICH_TEXT: return <RichEditor />
+    case RICH_TEXT: return <RichEditor onChange={(v) => field.onChange(v)} />;
       break;
     default:
       return <Input type={f.type} placeholder="shadcn" {...field} />;

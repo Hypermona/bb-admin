@@ -18,8 +18,7 @@ console.warn(
 );
 
 
-function App(): JSX.Element {
-  
+function App({ onChange }: { onChange: (v: any) => void }): JSX.Element {
   const initialConfig = {
     editorState: null,
     namespace: "Playground",
@@ -29,16 +28,17 @@ function App(): JSX.Element {
     },
     theme: PlaygroundEditorTheme,
   };
-  const onStateChange=(editorState:EditorState,editor: LexicalEditor)=>{
+  const onStateChange = (editorState: EditorState, editor: LexicalEditor) => {
     editor.update(() => {
-    const editorState = editor.getEditorState();
-    const jsonString = JSON.stringify(editorState);
-    console.log('jsonString', jsonString);
+      const editorState = editor.getEditorState();
+      const jsonString = JSON.stringify(editorState);
+      // console.log("jsonString", jsonString);
 
-    const htmlString = $generateHtmlFromNodes(editor);
-    console.log('htmlString', htmlString);
-  });
-  }
+      const htmlString = $generateHtmlFromNodes(editor);
+      onChange(htmlString);
+      // console.log("htmlString", htmlString);
+    });
+  };
   return (
     <LexicalComposer initialConfig={initialConfig}>
       <SharedHistoryContext>
@@ -55,10 +55,10 @@ function App(): JSX.Element {
   );
 }
 
-export default function PlaygroundApp(): JSX.Element {
+export default function PlaygroundApp({ onChange }: { onChange :(v:any)=>void}): JSX.Element {
   return (
     <SettingsContext>
-      <App />
+      <App onChange={onChange} />
     </SettingsContext>
   );
 }

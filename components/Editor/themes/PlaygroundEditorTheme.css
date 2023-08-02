@@ -13,6 +13,8 @@
   text-align: right;
 }
 .PlaygroundEditorTheme__paragraph {
+  color: rgb(178, 180, 192);
+  font-size: 18px;
   margin: 0;
   position: relative;
 }
@@ -28,22 +30,24 @@
   padding-left: 16px;
 }
 .PlaygroundEditorTheme__h1 {
-  font-size: 24px;
-  color: rgb(221, 220, 220);
-  font-weight: 400;
+  font-size: 36px;
+  color: rgb(189, 191, 202);
+  font-weight: 750;
+  line-height: 1;
+  letter-spacing: -0.025em;
+  font-weight: 800;
   margin: 0;
 }
 .PlaygroundEditorTheme__h2 {
-  font-size: 15px;
-  color: rgb(180, 182, 187);
+  font-size: 24px;
+  color: rgb(189, 191, 202);
   font-weight: 700;
   margin: 0;
-  text-transform: uppercase;
 }
 .PlaygroundEditorTheme__h3 {
-  font-size: 12px;
+  color: rgb(131, 132, 140);
+  font-size: 14px;
   margin: 0;
-  text-transform: uppercase;
 }
 .PlaygroundEditorTheme__indent {
   --lexical-indent-base-value: 40px;
@@ -82,11 +86,11 @@
   border-bottom: 1px solid rgba(88, 144, 255, 0.3);
 }
 .PlaygroundEditorTheme__link {
-  color: rgb(33, 111, 219);
+  text-decoration: underline !important;
   text-decoration: none;
 }
 .PlaygroundEditorTheme__link:hover {
-  text-decoration: underline;
+  color: rgb(63, 108, 212);
   cursor: pointer;
 }
 .PlaygroundEditorTheme__code {
@@ -282,6 +286,7 @@
 .PlaygroundEditorTheme__ol1 {
   padding: 0;
   margin: 0;
+  list-style-type:decimal;
   list-style-position: inside;
 }
 .PlaygroundEditorTheme__ol2 {
@@ -311,9 +316,12 @@
 .PlaygroundEditorTheme__ul {
   padding: 0;
   margin: 0;
+  list-style-type: initial;
   list-style-position: inside;
 }
 .PlaygroundEditorTheme__listItem {
+  color:rgb(178, 180, 192);
+  font-size: 18px;
   margin: 0 32px;
 }
 .PlaygroundEditorTheme__listItemChecked,
@@ -334,7 +342,7 @@
   content: '';
   width: 16px;
   height: 16px;
-  top: 2px;
+  top: 8px;
   left: 0;
   cursor: pointer;
   display: block;
@@ -356,9 +364,9 @@
   border-radius: 2px;
 }
 .PlaygroundEditorTheme__listItemChecked:before {
-  border: 1px solid rgb(61, 135, 245);
+  border: 1px solid rgb(65, 63, 181);
   border-radius: 2px;
-  background-color: #3d87f5;
+  background-color: #4d51c3;
   background-repeat: no-repeat;
 }
 .PlaygroundEditorTheme__listItemChecked:after {
@@ -368,7 +376,7 @@
   border-style: solid;
   position: absolute;
   display: block;
-  top: 6px;
+  top: 13px;
   width: 3px;
   left: 7px;
   right: 7px;

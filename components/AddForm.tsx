@@ -42,7 +42,7 @@ function AddForm() {
     console.log(d);
   };
   return (
-    <Card className="w-[700px]">
+    <Card className="w-[785px]">
       <CardHeader>
         <CardTitle>Add Content</CardTitle>
       </CardHeader>

@@ -1,10 +1,4 @@
-/**
- * Copyright (c) Meta Platforms, Inc. and affiliates.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- *
- */
+"use client"
 
 import type {LexicalCommand, LexicalEditor, RangeSelection} from 'lexical';
 
@@ -42,8 +36,7 @@ const VOICE_COMMANDS: Readonly<
   },
 };
 
-export const SUPPORT_SPEECH_RECOGNITION: boolean =
-  'SpeechRecognition' in window || 'webkitSpeechRecognition' in window;
+export const SUPPORT_SPEECH_RECOGNITION: boolean =true
 
 function SpeechToTextPlugin(): null {
   const [editor] = useLexicalComposerContext();
