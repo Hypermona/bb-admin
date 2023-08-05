@@ -4,6 +4,19 @@ export const RICH_TEXT = "richtext"
 export const FILE = 'file'
 export const PRODUCT_CARD = "product_card"
 export const FAQ = "FAQ"
+export const BLOG = "BLOG"
+export const PRODUCT = "PRODUCT"
+
+export const EDITOR_TYPES = [
+  {
+    name:"Blog",
+    value:BLOG
+  },
+  {
+    name:"Product",
+    value:PRODUCT
+  }
+]
 
 export const EDITOR_FIELDS:EditorFields = {
   title:{
@@ -43,7 +56,6 @@ export const BLOG_EDITOR_FIELDS = [
   EDITOR_FIELDS["shortDescription"],
   EDITOR_FIELDS["coverImage"],
   EDITOR_FIELDS["textBlock"],
-  EDITOR_FIELDS["faq"]
 ];
 export const PRODUCT_EDITOR_FIELDS = [
   EDITOR_FIELDS["title"],

@@ -84,3 +84,23 @@
   outline: 0px solid transparent;
 }
 
+/* width */
+::-webkit-scrollbar {
+  width: 7px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: 020817;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #373f53;
+  border-radius: 5px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #39486d;
+}

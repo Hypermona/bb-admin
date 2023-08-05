@@ -1,5 +1,5 @@
 "use Client";
-import React, { useId, useState } from "react";
+import React, { useEffect, useId, useState } from "react";
 import {
   Form,
   FormControl,
@@ -18,7 +18,8 @@ import { Popover, PopoverContent } from "./ui/popover";
 import { PopoverClose, PopoverTrigger } from "@radix-ui/react-popover";
 import ToolBox from "./ToolBox";
 import Field from "./FormComponents/Field";
-import { BLOG_EDITOR_FIELDS, EDITOR_FIELDS } from "@/lib/constants";
+import { BLOG, BLOG_EDITOR_FIELDS, EDITOR_FIELDS, PRODUCT_EDITOR_FIELDS } from "@/lib/constants";
+import Content from "@/context/content";
 
 function generateUUID() {
   let time = new Date().getTime();
@@ -33,10 +34,8 @@ function generateUUID() {
 }
 
 function AddForm() {
-  // const [formFields, setFormFields] = useState(DEFAULT_EDITOR_FIELDS);
-  // const appendFormFields = (field: keyof EditorFields) => {
-  //   setFormFields((prev) => [...prev, { ...EDITOR_FIELDS[field]}]);
-  // };
+  const {content:{type}}=Content.useContainer()
+  const formFields= type=== BLOG ?BLOG_EDITOR_FIELDS:PRODUCT_EDITOR_FIELDS
   const form = useForm();
   const onSubmit = (d: any) => {
     console.log(d);
@@ -49,7 +48,7 @@ function AddForm() {
       <CardContent>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-            {BLOG_EDITOR_FIELDS.map((f: FormField, i: number) => (
+            {formFields.map((f: FormField, i: number) => (
               <FormField
                 key={f.name + "_" + i}
                 control={form.control}

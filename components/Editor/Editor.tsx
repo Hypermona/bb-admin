@@ -148,9 +148,9 @@ export default function Editor(): JSX.Element {
         <KeywordsPlugin />
         <SpeechToTextPlugin />
         <AutoLinkPlugin />
-        <CommentPlugin
+        {/* <CommentPlugin
           providerFactory={undefined}
-        />
+        /> */}
         {isRichText ? (
           <>
             {
