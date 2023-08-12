@@ -51,6 +51,7 @@
     "katex": "^0.15.2",
     "lexical": "^0.11.3",
     "lodash-es": "^4.17.21",
+    "lodash.set": "^4.3.2",
     "next": "13.4.12",
     "next-themes": "^0.2.1",
     "postcss": "8.4.27",
@@ -67,5 +68,8 @@
     "y-websocket": "^1.5.0",
     "yjs": "^13.6.7",
     "zod": "^3.21.4"
+  },
+  "devDependencies": {
+    "@types/lodash.set": "^4.3.7"
   }
 }

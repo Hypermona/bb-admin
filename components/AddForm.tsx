@@ -10,7 +10,7 @@ import {
   FormMessage,
 } from "./ui/form";
 import { Input } from "./ui/input";
-import { useForm, useFieldArray } from "react-hook-form";
+import { useForm, FormProvider} from "react-hook-form";
 import { Button } from "./ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "./ui/card";
 import { PlusCircledIcon } from "@radix-ui/react-icons";
@@ -33,6 +33,28 @@ function generateUUID() {
   });
 }
 
+// type FormFieldMain =
+//   | {
+//       title: string;
+//       sortDescription: string;
+//       image: string;
+//     }
+//   | { description: string; faq: string }
+//   | {
+//       productCard: {
+//         title: string;
+//         image: string;
+//         price: string;
+//         features: {
+//           name: string;
+//           icon: string;
+//           rating: string;
+//         };
+//         sortDescription: string;
+//       };
+//       faq: string;
+//     };
+
 function AddForm() {
   const {content:{type}}=Content.useContainer()
   const formFields= type=== BLOG ?BLOG_EDITOR_FIELDS:PRODUCT_EDITOR_FIELDS
@@ -46,32 +68,22 @@ function AddForm() {
         <CardTitle>Add Content</CardTitle>
       </CardHeader>
       <CardContent>
+        <FormProvider {...form}>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
             {formFields.map((f: FormField, i: number) => (
               <FormField
-                key={f.name + "_" + i}
+                key={f.name}
                 control={form.control}
-                name={f.name + "_" + i}
+                name={f.name}
                 render={({ field }) => <Field field={field} f={f} />}
               />
             ))}
-            {/* <Popover>
-              <PopoverTrigger asChild>
-                <Button type="button" variant="ghost" size="icon">
-                  <PlusCircledIcon className="h-6 w-6" />
-                </Button>
-              </PopoverTrigger>
-              <PopoverContent side="right" className="w-full">
-                <PopoverClose>
-                  <ToolBox appendFormFields={appendFormFields} />
-                </PopoverClose>
-              </PopoverContent>
-            </Popover> */}
             <br />
             <Button type="submit">Submit</Button>
           </form>
         </Form>
+        </FormProvider>
       </CardContent>
     </Card>
   );

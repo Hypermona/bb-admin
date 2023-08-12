@@ -1,4 +1,5 @@
 export const TEXT = "text"
+export const NUMBER = "number"
 export const TEXTAREA = "textarea"
 export const RICH_TEXT = "richtext"
 export const FILE = 'file'
@@ -6,6 +7,9 @@ export const PRODUCT_CARD = "product_card"
 export const FAQ = "FAQ"
 export const BLOG = "BLOG"
 export const PRODUCT = "PRODUCT"
+export const FEATURES = "FEATURES"
+export const RATINGS = "RATINGS"
+
 
 export const EDITOR_TYPES = [
   {
@@ -29,13 +33,13 @@ export const EDITOR_FIELDS:EditorFields = {
     label: "Short Description",
     type: TEXTAREA,
   },
-  coverImage:{
+  image:{
     name: "image",
-    label: "Select an Cover Image",
+    label: "Cover Image URL",
     type: TEXT,
   },
-  textBlock :{
-    name: "textBlock",
+  description :{
+    name: "description",
     label: "Add Text Content",
     type: RICH_TEXT,
   },
@@ -48,20 +52,43 @@ export const EDITOR_FIELDS:EditorFields = {
     name:"faq",
     label:"Add FAQ",
     type:FAQ,
+  },
+  price:{
+    name:"price",
+    label:"₹ Price",
+    type:NUMBER,
+  },
+  features:{
+    name:"features",
+    label:"List Down The Features",
+    type:FEATURES,
+  },
+  ratings:{
+    name:"ratings",
+    label:"Ratings",
+    type:RATINGS,
   }
 }
 
 export const BLOG_EDITOR_FIELDS = [
   EDITOR_FIELDS["title"],
   EDITOR_FIELDS["shortDescription"],
-  EDITOR_FIELDS["coverImage"],
-  EDITOR_FIELDS["textBlock"],
+  EDITOR_FIELDS["image"],
+  EDITOR_FIELDS["description"],
 ];
 export const PRODUCT_EDITOR_FIELDS = [
   EDITOR_FIELDS["title"],
   EDITOR_FIELDS["shortDescription"],
-  EDITOR_FIELDS["coverImage"],
+  EDITOR_FIELDS["image"],
   EDITOR_FIELDS["productCard"],
   EDITOR_FIELDS["faq"]
 ];
 
+export const PRODUCT_FIELDS = [
+  EDITOR_FIELDS["title"],
+  {...EDITOR_FIELDS["image"],label:"Image URL"},
+  EDITOR_FIELDS["price"],
+  EDITOR_FIELDS['ratings'],
+  EDITOR_FIELDS['features'],
+  EDITOR_FIELDS["shortDescription"],
+]

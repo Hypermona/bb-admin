@@ -31,6 +31,7 @@ specifiers:
   '@radix-ui/react-select': ^1.2.2
   '@radix-ui/react-slot': ^1.0.2
   '@radix-ui/react-toast': ^1.1.4
+  '@types/lodash.set': ^4.3.7
   '@types/node': 20.4.5
   '@types/react': 18.2.16
   '@types/react-dom': 18.2.7
@@ -43,6 +44,7 @@ specifiers:
   katex: ^0.15.2
   lexical: ^0.11.3
   lodash-es: ^4.17.21
+  lodash.set: ^4.3.2
   next: 13.4.12
   next-themes: ^0.2.1
   postcss: 8.4.27
@@ -103,6 +105,7 @@ dependencies:
   katex: 0.15.6
   lexical: 0.11.3
   lodash-es: 4.17.21
+  lodash.set: 4.3.2
   next: 13.4.12_biqbaboplfbrettd7655fr4n2y
   next-themes: 0.2.1_54ux7fu2vrztxgcjbkegvwjefy
   postcss: 8.4.27
@@ -119,6 +122,9 @@ dependencies:
   y-websocket: 1.5.0_yjs@13.6.7
   yjs: 13.6.7
   zod: 3.21.4
+
+devDependencies:
+  '@types/lodash.set': 4.3.7
 
 packages:
 
@@ -1299,6 +1305,16 @@ packages:
   /@types/json5/0.0.29:
     resolution: {integrity: sha512-dRLjCWHYg4oaA77cxO64oO+7JwCwnIzkZPdrrC71jQmQtlhM556pwKo5bUzqvZndkVbeFLIIi+9TC40JNF5hNQ==}
     dev: false
+
+  /@types/lodash.set/4.3.7:
+    resolution: {integrity: sha512-bS5Wkg/nrT82YUfkNYPSccFrNZRL+irl7Yt4iM6OTSQ0VZJED2oUIVm15NkNtUAQ8SRhCe+axqERUV6MJgkeEg==}
+    dependencies:
+      '@types/lodash': 4.14.196
+    dev: true
+
+  /@types/lodash/4.14.196:
+    resolution: {integrity: sha512-22y3o88f4a94mKljsZcanlNWPzO0uBsBdzLAngf2tp533LzZcQzb6+eZPJ+vCTt+bqF2XnvT9gejTLsAcJAJyQ==}
+    dev: true
 
   /@types/node/20.4.5:
     resolution: {integrity: sha512-rt40Nk13II9JwQBdeYqmbn2Q6IVTA5uPhvSO+JVqdXw/6/4glI6oR9ezty/A9Hg5u7JH4OmYmuQ+XvjKm0Datg==}
@@ -3040,6 +3056,10 @@ packages:
 
   /lodash.merge/4.6.2:
     resolution: {integrity: sha512-0KpjqXRVvrYyCsX1swR/XTK0va6VQkQM6MNo7PqW77ByjAhoARA8EfrP1N4+KlKj8YS0ZUCtRT/YUuhyYDujIQ==}
+    dev: false
+
+  /lodash.set/4.3.2:
+    resolution: {integrity: sha512-4hNPN5jlm/N/HLMCO43v8BXKq9Z7QdAGc/VGrRD61w8gN9g/6jF9A4L1pbUgBLCffi0w9VsXfTOij5x8iTyFvg==}
     dev: false
 
   /loose-envify/1.4.0:

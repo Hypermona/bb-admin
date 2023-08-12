@@ -5,10 +5,13 @@ type FormField = {
 };
 
 type EditorFields = {
-  "title":FormField,
-  "shortDescription":FormField,
-  "coverImage":FormField,
-  "textBlock":FormField,
-  "productCard":FormField,
-  "faq":FormField
+  title:FormField,
+  shortDescription:FormField,
+  image:FormField,
+  description:FormField,
+  productCard:FormField,
+  faq:FormField,
+  price:FormField,
+  ratings:FormField,
+  features:FormField
 }
