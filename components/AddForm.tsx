@@ -10,7 +10,7 @@ import {
   FormMessage,
 } from "./ui/form";
 import { Input } from "./ui/input";
-import { useForm, FormProvider} from "react-hook-form";
+import { useForm, FormProvider } from "react-hook-form";
 import { Button } from "./ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "./ui/card";
 import { PlusCircledIcon } from "@radix-ui/react-icons";
@@ -33,32 +33,39 @@ function generateUUID() {
   });
 }
 
-// type FormFieldMain =
-//   | {
-//       title: string;
-//       sortDescription: string;
-//       image: string;
-//     }
-//   | { description: string; faq: string }
-//   | {
-//       productCard: {
-//         title: string;
-//         image: string;
-//         price: string;
-//         features: {
-//           name: string;
-//           icon: string;
-//           rating: string;
-//         };
-//         sortDescription: string;
-//       };
-//       faq: string;
-//     };
+// const blogInitValue = {
+//   title: "",
+//   sortDescription: "",
+//   image: "",
+//   description: "",
+//   faq: "",
+// };
+
+// const productCardsInitValue = {
+//   title: "",
+//   sortDescription: "",
+//   image: "",
+//   description: "",
+//   faq: "",
+//   price: 0,
+//   ratings: [{ rating: 0, brand: "", reviewCount: 0 }],
+//   features: [
+//     {
+//       name: "",
+//       icon: "",
+//       rating: 0,
+//     },
+//   ],
+// };
 
 function AddForm() {
-  const {content:{type}}=Content.useContainer()
-  const formFields= type=== BLOG ?BLOG_EDITOR_FIELDS:PRODUCT_EDITOR_FIELDS
-  const form = useForm();
+  const {
+    content: { type },
+  } = Content.useContainer();
+  const formFields = type === BLOG ? BLOG_EDITOR_FIELDS : PRODUCT_EDITOR_FIELDS;
+  const form = useForm<MainFormValues>({
+    // defaultValues: type === BLOG ? blogInitValue : productCardsInitValue,
+  });
   const onSubmit = (d: any) => {
     console.log(d);
   };
@@ -69,20 +76,20 @@ function AddForm() {
       </CardHeader>
       <CardContent>
         <FormProvider {...form}>
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-            {formFields.map((f: FormField, i: number) => (
-              <FormField
-                key={f.name}
-                control={form.control}
-                name={f.name}
-                render={({ field }) => <Field field={field} f={f} />}
-              />
-            ))}
-            <br />
-            <Button type="submit">Submit</Button>
-          </form>
-        </Form>
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+              {formFields.map((f: FormField, i: number) => (
+                <FormField
+                  key={f.name}
+                  control={form.control}
+                  name={f.name as any}
+                  render={({ field }) => <Field field={field} f={f} />}
+                />
+              ))}
+              <br />
+              <Button type="submit">Submit</Button>
+            </form>
+          </Form>
         </FormProvider>
       </CardContent>
     </Card>

@@ -4,12 +4,34 @@ type FormField = {
   type: string;
 };
 
+type MainFormValues =
+  | {
+      title: string;
+      shortDescription: string;
+      image: string;
+    }
+  | {
+      description: string;
+      faq: string;
+    }
+  | {
+      productCards: {
+        title: string;
+        image: string;
+        price: string;
+        ratings: { rating: number; brand:string; reviewCount: number }[];
+        features: { name: string; icon: string; rating: number }[];
+        shortDescription: string;
+      }[];
+      faq: string;
+    };
+
 type EditorFields = {
   title:FormField,
   shortDescription:FormField,
   image:FormField,
   description:FormField,
-  productCard:FormField,
+  productCards:FormField,
   faq:FormField,
   price:FormField,
   ratings:FormField,

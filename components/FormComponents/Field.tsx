@@ -11,7 +11,7 @@ import ArrayField from "./ArrayField";
 
 
 type Props = {
-  field: ControllerRenderProps<FieldValues, string>;
+  field: ControllerRenderProps<MainFormValues, any>;
   f: FormField;
 };
 
@@ -46,10 +46,8 @@ const RenderFieldByType = ({ field, f }: Props) => {
       return <ArrayField fieldName="faq" initialValues={fqaInitialValues} properties={faqProperties} onSubmit={()=>{}} />
     case PRODUCT_CARD:
       return <Products />;
-      break;
     default:
       return <Input type={f.type} placeholder="shadcn" {...field} />;
-      break;
   }
 };
 
@@ -60,8 +58,6 @@ function Field(props: Props) {
       <FormControl>
         <RenderFieldByType {...props} />
       </FormControl>
-      {/* <FormDescription></FormDescription> */}
-      {/* <FormMessage /> */}
     </FormItem>
   );
 }

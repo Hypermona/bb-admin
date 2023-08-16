@@ -43,8 +43,8 @@ export const EDITOR_FIELDS:EditorFields = {
     label: "Add Text Content",
     type: RICH_TEXT,
   },
-  productCard:{
-    name:"productCard",
+  productCards:{
+    name:"productCards",
     label:"Add Product",
     type:PRODUCT_CARD,
   },
@@ -80,7 +80,7 @@ export const PRODUCT_EDITOR_FIELDS = [
   EDITOR_FIELDS["title"],
   EDITOR_FIELDS["shortDescription"],
   EDITOR_FIELDS["image"],
-  EDITOR_FIELDS["productCard"],
+  EDITOR_FIELDS["productCards"],
   EDITOR_FIELDS["faq"]
 ];
 

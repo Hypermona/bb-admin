@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { Card, CardContent, CardHeader } from "../ui/card";
+import { Card, CardContent } from "../ui/card";
 import { Button } from "../ui/button";
-import { Pencil2Icon, PlusCircledIcon } from "@radix-ui/react-icons";
+import { Pencil2Icon, TrashIcon } from "@radix-ui/react-icons";
 import {
   Dialog,
   DialogContent,
@@ -9,20 +9,10 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
+import { FormControl, FormField, FormItem, FormLabel } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { ControllerRenderProps, FieldValues, useFormContext } from "react-hook-form";
+import { useFieldArray, useFormContext } from "react-hook-form";
 import { FEATURES, FILE, PRODUCT_FIELDS, RATINGS, RICH_TEXT, TEXTAREA } from "@/lib/constants";
 import { Textarea } from "../ui/textarea";
 import RichEditor from "../Editor/RichEditor";
@@ -82,18 +72,18 @@ const ratingsInitialValue = {
   reviewCount: 0,
 };
 
-const RenderFieldByType = ({ field, f }) => {
+const RenderFieldByType = ({ field, f, cardIndex }) => {
   switch (f.type) {
     case TEXTAREA:
       return <Textarea {...field} />;
     case FILE:
-      return <Input type={f.type} onChange={(e) => field.onChange(e.target.files)} />;
+      return <Input type={f.type} onChange={(e) => field.onChange(e.target.files)} {...field} />;
     case RICH_TEXT:
       return <RichEditor onChange={(v) => field.onChange(v)} />;
     case RATINGS:
       return (
         <ArrayField
-          fieldName="ratings"
+          fieldName={`productCards.${cardIndex}.ratings`}
           properties={ratingsProperties}
           initialValues={ratingsInitialValue}
           onSubmit={(v) => field.onChange(v)}
@@ -102,7 +92,7 @@ const RenderFieldByType = ({ field, f }) => {
     case FEATURES:
       return (
         <ArrayField
-          fieldName="features"
+          fieldName={`productCards.${cardIndex}.features`}
           properties={featureProperties}
           initialValues={featureInitialValue}
           onSubmit={(v) => field.onChange(v)}
@@ -110,7 +100,6 @@ const RenderFieldByType = ({ field, f }) => {
       );
     default:
       return <Input type={f.type} placeholder="shadcn" {...field} />;
-      break;
   }
 };
 
@@ -133,32 +122,29 @@ const AllProducts = ({ products }) => {
   }
 };
 
-const AddProductDialog = ({ isOpen, onToggle, OnSubmit }) => {
-  const form = useFormContext();
+const AddProductDialog = ({ isOpen, control, onToggle, field, index, OnSubmit }) => {
   return (
     <Dialog open={isOpen} onOpenChange={(open) => onToggle(open)}>
       <DialogContent className="sm:max-w-[800px] h-[95vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle>Edit profile</DialogTitle>
+          <DialogTitle>Edit Product</DialogTitle>
           <DialogDescription>
-            Make changes to your profile here. Click save when youre done.
+            Make changes to your product here. Click Done button when youre done.
           </DialogDescription>
         </DialogHeader>
-        <Form {...form}>
-          {PRODUCT_FIELDS.map((f: FormField, i: number) => (
-            <FormField
-              key={f.name + "_" + i}
-              control={form.control}
-              name={`products.${i}.${f.name}`}
-              render={({ field }) => <Field field={field} f={f} />}
-            />
-          ))}
-          <DialogFooter>
-            <Button type="button" onClick={() => onToggle(false)}>
-              Done
-            </Button>
-          </DialogFooter>
-        </Form>
+        {PRODUCT_FIELDS.map((f: FormField, i: number) => (
+          <FormField
+            key={`productCards.${index}.${f.name}`}
+            control={control}
+            name={`productCards.${index}.${f.name}`}
+            render={({ field }) => <Field field={field} f={f} cardIndex={index} />}
+          />
+        ))}
+        <DialogFooter>
+          <Button type="button" onClick={() => onToggle(false)}>
+            Done
+          </Button>
+        </DialogFooter>
       </DialogContent>
     </Dialog>
   );
@@ -167,39 +153,70 @@ const AddProductDialog = ({ isOpen, onToggle, OnSubmit }) => {
 type Props = {};
 
 function Products({}: Props) {
-  const [products, setProducts] = useState({
-    products:[
-      {
-        title:"",
-        image:"",
-        price:0,
-        shortDescription:""
-      }
-    ]
+  const form = useFormContext();
+  const { control,watch } = form;
+  const { fields, append, remove } = useFieldArray({
+    name: "productCards",
+    control,
+    rules: { maxLength: 4 },
   });
   const [open, toggleOpen] = useState(false);
   const onToggle = (open) => toggleOpen(open);
+  const addNewProduct = () => {
+    append({
+      title: "",
+      image: "",
+      price: 0,
+      shortDescription: "",
+    });
+    console.log("add colled", fields);
+
+  };
+  const removeProduct = (id) => {
+    
+    remove(id);
+    console.log("rmoved", id, fields);
+  };
   return (
     <Card>
       <CardContent>
         <AllProducts products={""} />
-        {products.products.map((prod, i) => (
-          <Card key={i}>
+        {fields?.map((field, i) => (
+          <Card key={field.id}>
             <CardContent className="flex">
-              <p className="flex-1">{prod.title}o</p>
+              {/* <p>{watch("productCards."+i+".title")}</p> */}
               <Button
-                variant={"secondary"}
+                variant={"outline"}
                 type="button"
                 className="mt-3"
                 onClick={() => onToggle(true)}
               >
                 <Pencil2Icon className="w-4 h-4" />
-                <span className="p-2">Edit Product</span>
+                <span className="p-2">Edit</span>
               </Button>
-              <AddProductDialog isOpen={open} onToggle={onToggle} OnSubmit={() => {}} />
+              <Button
+                variant={"destructive"}
+                type="button"
+                className="mt-3"
+                onClick={() => removeProduct(i)}
+              >
+                <TrashIcon className="w-4 h-4" />
+              </Button>
+              <AddProductDialog
+                field={field}
+                control={control}
+                index={i}
+                isOpen={open}
+                onToggle={onToggle}
+                OnSubmit={() => {}}
+              />
             </CardContent>
           </Card>
         ))}
+        <Button variant={"secondary"} type="button" className="mt-3" onClick={addNewProduct}>
+          <Pencil2Icon className="w-4 h-4" />
+          <span className="p-2">Add Product</span>
+        </Button>
       </CardContent>
     </Card>
   );
