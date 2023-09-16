@@ -18,110 +18,6 @@ import { Textarea } from "../ui/textarea";
 import RichEditor from "../Editor/RichEditor";
 import ArrayField from "./ArrayField";
 
-const featureProperties = [
-  { type: "text", name: "name", label: "Name", className: "w-[300px]", placeholder: "Enter..." },
-  {
-    type: "text",
-    name: "icon",
-    label: "Icon URL",
-    className: "w-[100px]",
-    placeholder: "Enter...",
-  },
-  {
-    type: "number",
-    name: "rating",
-    label: "Rating",
-    className: "w-[100px]",
-    placeholder: "Enter...",
-  },
-];
-
-const featureInitialValue = {
-  name: "",
-  icon: "",
-  rating: 0,
-};
-
-const ratingsProperties = [
-  {
-    type: "number",
-    name: "rating",
-    label: "Rating",
-    className: "w-[100px]",
-    placeholder: "Enter...",
-  },
-  {
-    type: "text",
-    name: "brand",
-    label: "Brand",
-    className: "w-[100px]",
-    placeholder: "Enter...",
-  },
-  {
-    type: "number",
-    name: "reviewCount",
-    label: "Review Count",
-    className: "w-[100px]",
-    placeholder: "Enter...",
-  },
-];
-
-const ratingsInitialValue = {
-  rating: 0,
-  brand: "",
-  reviewCount: 0,
-};
-
-const RenderFieldByType = ({ field, f, cardIndex }) => {
-  switch (f.type) {
-    case TEXTAREA:
-      return <Textarea {...field} />;
-    case FILE:
-      return <Input type={f.type} onChange={(e) => field.onChange(e.target.files)} {...field} />;
-    case RICH_TEXT:
-      return <RichEditor onChange={(v) => field.onChange(v)} />;
-    case RATINGS:
-      return (
-        <ArrayField
-          fieldName={`productCards.${cardIndex}.ratings`}
-          properties={ratingsProperties}
-          initialValues={ratingsInitialValue}
-          onSubmit={(v) => field.onChange(v)}
-        />
-      );
-    case FEATURES:
-      return (
-        <ArrayField
-          fieldName={`productCards.${cardIndex}.features`}
-          properties={featureProperties}
-          initialValues={featureInitialValue}
-          onSubmit={(v) => field.onChange(v)}
-        />
-      );
-    default:
-      return <Input type={f.type} placeholder="shadcn" {...field} />;
-  }
-};
-
-function Field(props) {
-  return (
-    <FormItem>
-      <FormLabel>{props.f.label}</FormLabel>
-      <FormControl>
-        <RenderFieldByType {...props} />
-      </FormControl>
-    </FormItem>
-  );
-}
-
-const AllProducts = ({ products }) => {
-  if (products) {
-    return <p>hi</p>;
-  } else {
-    return null;
-  }
-};
-
 const AddProductDialog = ({ isOpen, control, onToggle, field, index, OnSubmit }) => {
   return (
     <Dialog open={isOpen} onOpenChange={(open) => onToggle(open)}>
@@ -132,14 +28,6 @@ const AddProductDialog = ({ isOpen, control, onToggle, field, index, OnSubmit })
             Make changes to your product here. Click Done button when youre done.
           </DialogDescription>
         </DialogHeader>
-        {PRODUCT_FIELDS.map((f: FormField, i: number) => (
-          <FormField
-            key={`productCards.${index}.${f.name}`}
-            control={control}
-            name={`productCards.${index}.${f.name}`}
-            render={({ field }) => <Field field={field} f={f} cardIndex={index} />}
-          />
-        ))}
         <DialogFooter>
           <Button type="button" onClick={() => onToggle(false)}>
             Done
@@ -154,7 +42,7 @@ type Props = {};
 
 function Products({}: Props) {
   const form = useFormContext();
-  const { control,watch } = form;
+  const { control, watch } = form;
   const { fields, append, remove } = useFieldArray({
     name: "productCards",
     control,
@@ -170,17 +58,14 @@ function Products({}: Props) {
       shortDescription: "",
     });
     console.log("add colled", fields);
-
   };
   const removeProduct = (id) => {
-    
     remove(id);
     console.log("rmoved", id, fields);
   };
   return (
     <Card>
       <CardContent>
-        <AllProducts products={""} />
         {fields?.map((field, i) => (
           <Card key={field.id}>
             <CardContent className="flex">

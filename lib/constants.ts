@@ -9,6 +9,62 @@ export const BLOG = "BLOG"
 export const PRODUCT = "PRODUCT"
 export const FEATURES = "FEATURES"
 export const RATINGS = "RATINGS"
+export const ARRAY_FEILD = "ARRAY_FEILD"
+
+const FEATURE_PROPERTIES = [
+  { type: "text", name: "name", label: "Name", className: "w-[300px]", placeholder: "Enter..." },
+  {
+    type: "text",
+    name: "icon",
+    label: "Icon URL",
+    className: "w-[100px]",
+    placeholder: "Enter...",
+  },
+  {
+    type: "number",
+    name: "rating",
+    label: "Rating",
+    className: "w-[100px]",
+    placeholder: "Enter...",
+  },
+];
+
+const FEATURE_INITIALVALUE = {
+  name: "",
+  icon: "",
+  rating: 0,
+};
+
+const RATINGS_PROPERTIES = [
+  {
+    type: "number",
+    name: "rating",
+    label: "Rating",
+    className: "w-[100px]",
+    placeholder: "Enter...",
+  },
+  {
+    type: "select",
+    options:[{value:"AMAZON",label:"Amazon"},{value:"FLIPKART",label:"Flipkart"}],
+    name: "brand",
+    label: "Brand",
+    className: "w-[100px]",
+    placeholder: "Enter...",
+  },
+  {
+    type: "number",
+    name: "reviewCount",
+    label: "Review Count",
+    className: "w-[100px]",
+    placeholder: "Enter...",
+  },
+];
+
+const RATINGS_INITIALVALUE = {
+  rating: 0,
+  brand: "",
+  reviewCount: 0,
+};
 
 
 export const EDITOR_TYPES = [
@@ -61,12 +117,16 @@ export const EDITOR_FIELDS:EditorFields = {
   features:{
     name:"features",
     label:"List Down The Features",
-    type:FEATURES,
+    type:ARRAY_FEILD,
+    initialvalue:FEATURE_INITIALVALUE,
+    properties:FEATURE_PROPERTIES
   },
   ratings:{
     name:"ratings",
     label:"Ratings",
-    type:RATINGS,
+    type:ARRAY_FEILD,
+    initialvalue:RATINGS_INITIALVALUE,
+    properties:RATINGS_PROPERTIES
   }
 }
 

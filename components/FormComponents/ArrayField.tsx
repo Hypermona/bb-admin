@@ -1,13 +1,18 @@
 import { Button } from "@/components/ui/button";
-import {
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-} from "@/components/ui/form";
+import { FormControl, FormField, FormItem, FormLabel } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import {  useFieldArray, useFormContext } from "react-hook-form";
+import { useFieldArray, useFormContext } from "react-hook-form";
 import { TrashIcon } from "@radix-ui/react-icons";
+import { Card } from "../ui/card";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "../ui/select";
 
 type Props = {
   fieldName: string;
@@ -17,12 +22,16 @@ type Props = {
     label: string;
     className: string;
     placeholder?: string;
+    options?: {
+      value: string;
+      label: string;
+    }[];
   }[];
   initialValues: object;
   onSubmit: (v) => void;
 };
 
-function ArrayField({ fieldName, initialValues, properties, onSubmit}: Props) {
+function ArrayField({ fieldName, initialValues, properties, onSubmit }: Props) {
   const form = useFormContext();
   const { control } = form;
   const { fields, append, remove } = useFieldArray({
@@ -31,24 +40,43 @@ function ArrayField({ fieldName, initialValues, properties, onSubmit}: Props) {
   });
 
   return (
-    <>
-      {fields.map((_field, index) => (
-        <div key={_field.id} className="flex w-full items-center space-x-2">
+    <Card className="p-2">
+      {fields.map((field, index) => (
+        <div key={field.id} className="flex w-full items-center space-x-2">
           {properties.map((prop, i) => (
             <FormField
-              key={_field.id + i}
+              key={field.id}
               control={control}
               name={`${fieldName}.${index}.${prop.name}`}
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>{prop.label}</FormLabel>
                   <FormControl>
-                    <Input
-                      type={prop.type}
-                      {...field}
-                      className={prop.className}
-                      placeholder={prop.placeholder}
-                    />
+                    {prop?.type === "select" ? (
+                      <Select onValueChange={field.onChange} defaultValue={field.value}>
+                        <FormControl>
+                          <SelectTrigger className="w-[180px]">
+                            <SelectValue placeholder={prop?.placeholder} />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          <SelectGroup>
+                            {prop?.options?.map((o) => (
+                              <SelectItem value={o.value} key={o.value}>
+                                {o.label}
+                              </SelectItem>
+                            ))}
+                          </SelectGroup>
+                        </SelectContent>
+                      </Select>
+                    ) : (
+                      <Input
+                        type={prop.type}
+                        {...field}
+                        className={prop.className}
+                        placeholder={prop.placeholder}
+                      />
+                    )}
                   </FormControl>
                 </FormItem>
               )}
@@ -67,12 +95,12 @@ function ArrayField({ fieldName, initialValues, properties, onSubmit}: Props) {
       <Button
         type="button"
         variant={"secondary"}
-        className="p-5 mx-2"
+        className="p-5 m-2"
         onClick={() => append(initialValues)}
       >
         Add
       </Button>
-    </>
+    </Card>
   );
 }
 

@@ -2,7 +2,19 @@ type FormField = {
   name: string;
   label?: string;
   type: string;
+  placeholder?:string;
+  initialvalue?:any;
+  properties?:any;
 };
+
+type ProductFields = {
+  title: string;
+  image: string;
+  price: string;
+  ratings: { rating: number; brand:string; reviewCount: number }[];
+  features: { name: string; icon: string; rating: number }[];
+  shortDescription: string;
+}
 
 type MainFormValues =
   | {
