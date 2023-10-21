@@ -6,19 +6,54 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { currencyFormatter } from "@/lib/helpers";
+import Image from "next/image";
+import { Checkbox } from "../ui/checkbox";
+import { Pencil2Icon, TrashIcon } from "@radix-ui/react-icons";
+import { Button } from "../ui/button";
+import Link from "next/link";
 
-type Props = {};
+type Props = {
+  card: resProductFields;
+  selected: boolean;
+  changeSelected: (checked: resProductFields) => void;
+  handleDelete: (id: string) => void;
+  permissions: { select: boolean; delete: boolean; edit: boolean };
+};
 
-function ProductCard({}: Props) {
+function ProductCard({ card, selected, changeSelected, handleDelete, permissions }: Props) {
+  console.log(card);
   return (
-    <Card className="h-[250px] w-[200px]">
-      <CardContent>
-        <p>Card Content</p>
-      </CardContent>
-      <CardHeader>
-        <CardTitle>Card Title</CardTitle>
-        {/* <CardDescription>Card Description</CardDescription> */}
-      </CardHeader>
+    <Card className="relative h-[330px] w-[250px] p-1">
+      {permissions.select && (
+        <div className="absolute right-1 p-1 m-1 bg-foreground leading-3 rounded-sm">
+          <Checkbox
+            checked={selected}
+            className="border-background"
+            onCheckedChange={() => changeSelected(card)}
+          />
+        </div>
+      )}
+      <div className="absolute">
+        {permissions.edit && (
+          <Link href={{ pathname: "/product/add", query: { data: JSON.stringify(card) } }}>
+            <Button>
+              <Pencil2Icon />
+            </Button>
+          </Link>
+        )}
+        {permissions.delete && (
+          <Button onClick={() => handleDelete(card.id)}>
+            <TrashIcon />
+          </Button>
+        )}
+      </div>
+
+      <Image src={card.image} width={250} height={250} alt={card.title} className="rounded-md" />
+      <div className="p-2">
+        <CardTitle className="h-[40px] overflow-hidden leading-5">{card.title}</CardTitle>
+        <CardDescription>{currencyFormatter(card.price)}</CardDescription>
+      </div>
     </Card>
   );
 }

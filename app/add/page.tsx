@@ -10,18 +10,18 @@ import SelectEditorType from "@/components/SelectEditorType";
 function AddNew() {
   const router = useRouter();
   const goBack = () => router.push("/");
-  
+
   return (
     <div className="container py-5">
       <nav className="w-full h-20 flex sticky top-[10px]">
         <Button onClick={goBack} className="mr-auto">
           <ArrowLeftIcon className="h-4 w-4" />
         </Button>
+        <UploadImages />
         <SelectEditorType />
       </nav>
       <div className="flex justify-around">
         <AddForm />
-        <UploadImages />
       </div>
     </div>
   );

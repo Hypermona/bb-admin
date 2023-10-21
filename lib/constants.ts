@@ -10,6 +10,7 @@ export const PRODUCT = "PRODUCT"
 export const FEATURES = "FEATURES"
 export const RATINGS = "RATINGS"
 export const ARRAY_FEILD = "ARRAY_FEILD"
+export const SELECT = "SELECT"
 
 const FEATURE_PROPERTIES = [
   { type: "text", name: "name", label: "Name", className: "w-[300px]", placeholder: "Enter..." },
@@ -34,6 +35,25 @@ const FEATURE_INITIALVALUE = {
   icon: "",
   rating: 0,
 };
+
+const categoryOptions = [
+  {
+    value:"smartphone",
+    label:"Smart Phones"
+  },
+  {
+    value:"innerWear",
+    label:"Inner Wears"
+  },
+  {
+    value:"gift",
+    label:"Gift"
+  },
+  {
+    value:"kitchen",
+    label:"Kitchen Items"
+  }
+];
 
 const RATINGS_PROPERTIES = [
   {
@@ -66,6 +86,29 @@ const RATINGS_INITIALVALUE = {
   reviewCount: 0,
 };
 
+const LINKS_PROPERTIES = [
+  {
+    type: "text",
+    name: "link",
+    label: "Link",
+    className: "w-[400px]",
+    placeholder: "https://...",
+  },
+  {
+    type: "select",
+    options:[{value:"AMAZON",label:"Amazon"},{value:"FLIPKART",label:"Flipkart"}],
+    name: "brand",
+    label: "Brand",
+    className: "w-[100px]",
+    placeholder: "Select a Brand",
+  }
+];
+
+const LINKS_INITIALVALUE = {
+  link: "",
+  brand: "",
+};
+
 
 export const EDITOR_TYPES = [
   {
@@ -94,6 +137,12 @@ export const EDITOR_FIELDS:EditorFields = {
     label: "Cover Image URL",
     type: TEXT,
   },
+  category:{
+    name: "category",
+    label: "Category",
+    type: SELECT,
+    options:categoryOptions
+  },
   description :{
     name: "description",
     label: "Add Text Content",
@@ -113,6 +162,13 @@ export const EDITOR_FIELDS:EditorFields = {
     name:"price",
     label:"₹ Price",
     type:NUMBER,
+  },
+  links:{
+    name:"Links",
+    label:"List Down The Links",
+    type:ARRAY_FEILD,
+    initialvalue:LINKS_INITIALVALUE,
+    properties:LINKS_PROPERTIES
   },
   features:{
     name:"features",
@@ -148,7 +204,9 @@ export const PRODUCT_FIELDS = [
   EDITOR_FIELDS["title"],
   {...EDITOR_FIELDS["image"],label:"Image URL"},
   EDITOR_FIELDS["price"],
+  EDITOR_FIELDS['category'],
   EDITOR_FIELDS['ratings'],
   EDITOR_FIELDS['features'],
+  EDITOR_FIELDS['links'],
   EDITOR_FIELDS["shortDescription"],
 ]

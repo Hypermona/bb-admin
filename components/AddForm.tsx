@@ -6,13 +6,16 @@ import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 import Field from "./FormComponents/Field";
 import { BLOG, BLOG_EDITOR_FIELDS, PRODUCT_EDITOR_FIELDS } from "@/lib/constants";
 import Content from "@/context/content";
+import { useSearchParams } from "next/navigation";
 
 function AddForm() {
   const {
     content: { type },
   } = Content.useContainer();
   const formFields = type === BLOG ? BLOG_EDITOR_FIELDS : PRODUCT_EDITOR_FIELDS;
-  const form = useForm({});
+  const query = useSearchParams();
+  const selected = JSON.parse(query.get("selected")!);
+  const form = useForm<BlogOrProductCards>({ defaultValues: { productCards: selected } });
   const onSubmit = (d: any) => {
     console.log(d);
   };

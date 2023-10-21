@@ -11,14 +11,24 @@ import {
   FILE,
   PRODUCT_CARD,
   RICH_TEXT,
+  SELECT,
   TEXTAREA,
 } from "@/lib/constants";
 import RichEditor from "../Editor/RichEditor";
 import Products from "./Products";
 import ArrayField from "./ArrayField";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "../ui/select";
 
 type Props = {
-  field?: ControllerRenderProps;
+  field?: ControllerRenderProps<BlogOrProductCards, any>;
   f: FormField;
 };
 
@@ -41,6 +51,25 @@ const fqaInitialValues = {
   answer: "",
 };
 
+const SelectWrapper = ({ field, f }) => {
+  return (
+    <Select onValueChange={field.onChange} defaultValue={field.value}>
+      <SelectTrigger className="w-[180px]">
+        <SelectValue placeholder={f.placeholder} />
+      </SelectTrigger>
+      <SelectContent>
+        <SelectGroup>
+          {f?.options?.map((ele) => (
+            <SelectItem key={ele.value} value={ele.value}>
+              {ele.label}
+            </SelectItem>
+          ))}
+        </SelectGroup>
+      </SelectContent>
+    </Select>
+  );
+};
+
 const RenderFieldByType = ({ field, f }: Props) => {
   switch (f.type) {
     case TEXTAREA:
@@ -49,6 +78,8 @@ const RenderFieldByType = ({ field, f }: Props) => {
       return <Input type={f.type} onChange={(e) => field?.onChange(e.target.files)} />;
     case RICH_TEXT:
       return <RichEditor onChange={(v) => field?.onChange(v)} />;
+    case SELECT:
+      return <SelectWrapper field={field} f={f} />;
     case FAQ:
       return (
         <ArrayField
@@ -68,7 +99,7 @@ const RenderFieldByType = ({ field, f }: Props) => {
         />
       );
     case PRODUCT_CARD:
-      return <Products />;
+      return <Products field={field} />;
     default:
       return <Input type={f.type} placeholder="shadcn" {...field} />;
   }
