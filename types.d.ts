@@ -22,6 +22,12 @@ interface resProductFields extends ProductFields {
   id: string;
 }
 
+type actionType = {
+  selected: resProductFields[];
+  onSubmit?: Function;
+  clearSelected?: Function;
+};
+
 type BlogOrProductCards =
   | {
       title: string;

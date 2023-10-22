@@ -1,9 +1,20 @@
 import { NextResponse } from "next/server";
-import { collection, deleteDoc, doc, getDocs } from "firebase/firestore";
+import { and, collection, deleteDoc, doc, getDocs, query, where } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 
-export async function GET() {
-  const querySnapshot = await getDocs(collection(db, "products"));
+export async function GET(req: Request) {
+  console.log("qqqqqq", new URL(req.url).searchParams.get("q"));
+  const search = new URL(req.url).searchParams.get("q");
+  const querySnapshot =
+    search !== ""
+      ? await getDocs(
+          query(
+            collection(db, "products"),
+            where("search", ">=", search),
+            where("search", "<=", search + "\uf8ff")
+          )
+        )
+      : await getDocs(collection(db, "products"));
   let res: resProductFields[] = [];
   querySnapshot.forEach((doc) => {
     let data: ProductFields = <ProductFields>doc.data();

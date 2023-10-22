@@ -19,16 +19,24 @@ type Props = {
   changeSelected: (checked: resProductFields) => void;
   handleDelete: (id: string) => void;
   permissions: { select: boolean; delete: boolean; edit: boolean };
+  disabled: boolean;
 };
 
-function ProductCard({ card, selected, changeSelected, handleDelete, permissions }: Props) {
-  console.log(card);
+function ProductCard({
+  card,
+  selected,
+  changeSelected,
+  handleDelete,
+  permissions,
+  disabled,
+}: Props) {
   return (
-    <Card className="relative h-[330px] w-[250px] p-1">
+    <Card className={`relative h-[330px] w-[250px] p-1 ${disabled ? "opacity-50" : ""}`}>
       {permissions.select && (
         <div className="absolute right-1 p-1 m-1 bg-foreground leading-3 rounded-sm">
           <Checkbox
             checked={selected}
+            disabled={disabled}
             className="border-background"
             onCheckedChange={() => changeSelected(card)}
           />

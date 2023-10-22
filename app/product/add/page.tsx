@@ -35,7 +35,9 @@ function AddProduct() {
     [state]
   );
   const onSubmit = async (data) => {
-    let payload = !!state ? { id: state?.id, data: data } : { data: data };
+    let payload = !!state
+      ? { id: state?.id, data: data }
+      : { data: { ...data, search: data.title.toLocaleLowerCase() } };
     await fetch("/api/product/add", {
       method: !!state ? "PUT" : "POST",
       headers: {

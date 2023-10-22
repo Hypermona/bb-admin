@@ -19,24 +19,25 @@ import {
 } from "@/components/ui/select";
 import { useForm } from "react-hook-form";
 
-type Props = {};
+type Props = {
+  onSubmit: any;
+};
 
-function AdvancedSearch({}: Props) {
+function AdvancedSearch({ onSubmit }: Props) {
   const form = useForm();
-  const onSubmit = () => {};
 
   return (
     <div>
-      <div className="flex w-full max-w-sm items-center space-x-2">
+      <div className="flex w-full max-w-sm items-center">
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="flex">
             <FormField
               control={form.control}
               name="title"
-              render={({ field }) => <Input type="email" placeholder="Email" {...field} />}
+              render={({ field }) => <Input type="text" placeholder="Title" {...field} />}
             />
 
-            <FormField
+            {/* <FormField
               control={form.control}
               name="brand"
               render={({ field }) => (
@@ -48,15 +49,17 @@ function AdvancedSearch({}: Props) {
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      <SelectItem value="m@example.com">m@example.com</SelectItem>
-                      <SelectItem value="m@google.com">m@google.com</SelectItem>
+                      <SelectItem value="m@example.com">Ratings</SelectItem>
+                      <SelectItem value="m@google.com">price</SelectItem>
                       <SelectItem value="m@support.com">m@support.com</SelectItem>
                     </SelectContent>
                   </Select>
                 </FormItem>
               )}
-            />
-            <Button type="submit">Subscribe</Button>
+            /> */}
+            <Button type="submit" variant={"secondary"}>
+              Search
+            </Button>
           </form>
         </Form>
       </div>

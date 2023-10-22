@@ -5,7 +5,7 @@ import { db } from "@/lib/firebase";
 export async function POST(request: Request) {
   const res = await request.json();
   try {
-    const docRef = await addDoc(collection(db, "products"), res);
+    const docRef = await addDoc(collection(db, "products"), res.data);
 
     console.log("Document written with ID: ", docRef.id);
     return NextResponse.json({ res: docRef.id });
