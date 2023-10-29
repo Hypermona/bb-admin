@@ -18,9 +18,10 @@ export async function POST(req: NextRequest) {
     const filename = getSlutJsonfilename(body?.data?.title);
     await storeFile(path.join("db", filename), body?.data);
     const res = await cloudinary.uploader.upload(path.join("db", filename), {
-      ...(!body?.metaData?.public_id ? { folder: "bb-admin/blogs" } : {}),
+      ...(!body?.metaData?.public_id
+        ? { folder: "bb-admin/blogs", use_filename: true }
+        : { public_id: body?.metaData?.public_id }),
       resource_type: "raw",
-      public_id: body?.metaData?.public_id,
       overwrite: !!body?.metaData?.public_id,
       invalidate: !!body?.metaData?.public_id,
     });
@@ -53,4 +54,21 @@ export async function GET() {
     .catch((err) => {
       console.log(err);
     });
+}
+export async function DELETE(req: NextRequest) {
+  if (req.body) {
+    const body = await req.json();
+    console.log("bbbb", body);
+    try {
+      const result = await cloudinary.uploader.destroy(body?.public_id, { resource_type: "raw" });
+      return new Response(JSON.stringify(result), {
+        status: 200,
+      });
+    } catch (e) {
+      console.log(e);
+      return new Response(JSON.stringify(e), {
+        status: 400,
+      });
+    }
+  }
 }

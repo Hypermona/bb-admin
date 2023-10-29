@@ -15,11 +15,17 @@ interface Data {
 function BlogCard({ metaData }: { metaData: any }) {
   const { data, isLoading } = useSWR(metaData?.secure_url, getData);
   console.log(data);
+  const handleDelete = async () => {
+    await fetch("api/add", {
+      method: "DELETE",
+      body: JSON.stringify({ public_id: metaData?.public_id }),
+    });
+  };
   return (
     !isLoading && (
       <div className="w-[250px] h-[400px] overflow-hidden bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
         <div className="absolute">
-          <Button onClick={() => {}}>
+          <Button onClick={handleDelete}>
             <TrashIcon />
           </Button>
           <Link
