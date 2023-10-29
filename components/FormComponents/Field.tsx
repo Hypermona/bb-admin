@@ -77,7 +77,7 @@ const RenderFieldByType = ({ field, f }: Props) => {
     case FILE:
       return <Input type={f.type} onChange={(e) => field?.onChange(e.target.files)} />;
     case RICH_TEXT:
-      return <RichEditor onChange={(v) => field?.onChange(v)} />;
+      return <RichEditor onChange={(v) => field?.onChange(v)} value={field?.value} />;
     case SELECT:
       return <SelectWrapper field={field} f={f} />;
     case FAQ:

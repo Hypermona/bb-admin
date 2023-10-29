@@ -6,18 +6,50 @@ import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 import Field from "./FormComponents/Field";
 import { BLOG, BLOG_EDITOR_FIELDS, PRODUCT_EDITOR_FIELDS } from "@/lib/constants";
 import Content from "@/context/content";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
+import useSWR from "swr";
+import { getData } from "@/lib/dataservices";
+import { useEffect } from "react";
 
 function AddForm() {
   const {
     content: { type },
+    changeContentType,
   } = Content.useContainer();
-  const formFields = type === BLOG ? BLOG_EDITOR_FIELDS : PRODUCT_EDITOR_FIELDS;
+  const router = useRouter();
   const query = useSearchParams();
   const selected = JSON.parse(query.get("selected")!);
-  const form = useForm<BlogOrProductCards>({ defaultValues: { productCards: selected } });
-  const onSubmit = (d: any) => {
-    console.log(d);
+  const fetch_url = query.get("fetch_url");
+  const metaState = JSON.parse(query.get("metaData")!);
+  const { data } = useSWR(fetch_url, getData);
+  console.log(data);
+  useEffect(() => {
+    data?.type && changeContentType(data?.type);
+  }, [data?.type]);
+
+  const formFields = type === BLOG ? BLOG_EDITOR_FIELDS : PRODUCT_EDITOR_FIELDS;
+
+  const form = useForm<BlogOrProductCards>({
+    defaultValues: { ...data, productCards: data?.productCards || selected },
+  });
+
+  console.log("type", type);
+  const onSubmit = async (data: any) => {
+    console.log(data);
+    try {
+      let res = await fetch("/api/add", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ data: { ...data, type }, metaData: metaState }),
+      });
+      if (res.status === 200) {
+        router.replace("/");
+      }
+    } catch (err) {
+      console.log(err);
+    }
   };
   return (
     <Card className="w-[785px]">
