@@ -9,7 +9,8 @@ import Content from "@/context/content";
 import { useRouter, useSearchParams } from "next/navigation";
 import useSWR from "swr";
 import { getData } from "@/lib/dataservices";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import LoadingButton from "./LoadingButton";
 
 function AddForm() {
   const {
@@ -22,6 +23,7 @@ function AddForm() {
   const fetch_url = query.get("fetch_url");
   const metaState = JSON.parse(query.get("metaData")!);
   const { data } = useSWR(fetch_url, getData);
+  const [submiting, setSubmiting] = useState(false);
   console.log(data);
   useEffect(() => {
     data?.type && changeContentType(data?.type);
@@ -35,6 +37,7 @@ function AddForm() {
 
   console.log("type", type);
   const onSubmit = async (data: any) => {
+    setSubmiting(true);
     console.log(data);
     try {
       let res = await fetch("/api/add", {
@@ -50,6 +53,7 @@ function AddForm() {
     } catch (err) {
       console.log(err);
     }
+    setSubmiting(false);
   };
   return (
     <Card className="w-[785px]">
@@ -67,8 +71,9 @@ function AddForm() {
                 render={({ field }) => <Field field={field} f={f} />}
               />
             ))}
-            <br />
-            <Button type="submit">Submit</Button>
+            <LoadingButton type="submit" disabled={submiting}>
+              Submit
+            </LoadingButton>
           </form>
         </Form>
       </CardContent>

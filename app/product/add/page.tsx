@@ -1,5 +1,6 @@
 "use client";
 import Field from "@/components/FormComponents/Field";
+import LoadingButton from "@/components/LoadingButton";
 import UploadImages from "@/components/UploadImages";
 import Header from "@/components/product/Header";
 import { Button } from "@/components/ui/button";
@@ -7,7 +8,7 @@ import { Card } from "@/components/ui/card";
 import { Form, FormField } from "@/components/ui/form";
 import { ARRAY_FEILD, PRODUCT_FIELDS } from "@/lib/constants";
 import { useSearchParams } from "next/navigation";
-import React, { useMemo, useRef } from "react";
+import React, { useMemo, useRef, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 
 type Props = {};
@@ -15,6 +16,7 @@ type Props = {};
 function AddProduct() {
   const submitRef = useRef<HTMLInputElement>(null);
   const query = useSearchParams();
+  const [loading, setLoading] = useState(false);
   const state = JSON.parse(query.get("data")!);
   const form = useForm({ defaultValues: JSON.parse(query.get("data")!) });
   console.log(query.get("selected"));
@@ -23,18 +25,20 @@ function AddProduct() {
     () => (
       <>
         <UploadImages />
-        <Button
+        <LoadingButton
+          disabled={loading}
           onClick={() => {
             submitRef.current?.click();
           }}
         >
           {!!state ? "Update" : "Submit"}
-        </Button>
+        </LoadingButton>
       </>
     ),
-    [state]
+    [state, loading]
   );
   const onSubmit = async (data) => {
+    setLoading(true);
     let payload = !!state
       ? { id: state?.id, data: data }
       : { data: { ...data, search: data.title.toLocaleLowerCase() } };
@@ -45,6 +49,7 @@ function AddProduct() {
       },
       body: JSON.stringify(payload),
     });
+    setLoading(false);
   };
   return (
     <div className="scroll-smooth">

@@ -25,12 +25,10 @@ export async function POST(req: NextRequest) {
       overwrite: !!body?.metaData?.public_id,
       invalidate: !!body?.metaData?.public_id,
     });
-    if (res) {
-      rm(path.join("db", filename), (err) => {
-        console.log(err);
-      });
-    }
-    return new Response(JSON.stringify({}), {
+    rm(path.join("db", filename), (err) => {
+      console.log(err);
+    });
+    return new Response(JSON.stringify(res), {
       status: 200,
     });
   }
