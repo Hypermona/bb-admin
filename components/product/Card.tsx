@@ -9,7 +9,7 @@ import {
 import { currencyFormatter } from "@/lib/helpers";
 import Image from "next/image";
 import { Checkbox } from "../ui/checkbox";
-import { Pencil2Icon, TrashIcon } from "@radix-ui/react-icons";
+import { CopyIcon, Pencil2Icon, TrashIcon } from "@radix-ui/react-icons";
 import { Button } from "../ui/button";
 import Link from "next/link";
 
@@ -18,7 +18,7 @@ type Props = {
   selected: boolean;
   changeSelected: (checked: resProductFields) => void;
   handleDelete: (id: string) => void;
-  permissions: { select: boolean; delete: boolean; edit: boolean };
+  permissions: { select: boolean; delete: boolean; edit: boolean; copy: boolean };
   disabled: boolean;
 };
 
@@ -47,6 +47,15 @@ function ProductCard({
           <Link href={{ pathname: "/product/add", query: { data: JSON.stringify(card) } }}>
             <Button>
               <Pencil2Icon />
+            </Button>
+          </Link>
+        )}
+        {permissions.copy && (
+          <Link
+            href={{ pathname: "/product/add", query: { data: JSON.stringify(card), copy: true } }}
+          >
+            <Button>
+              <CopyIcon />
             </Button>
           </Link>
         )}

@@ -1,10 +1,9 @@
 "use Client";
 import { Form, FormField } from "./ui/form";
 import { useForm } from "react-hook-form";
-import { Button } from "./ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 import Field from "./FormComponents/Field";
-import { BLOG, BLOG_EDITOR_FIELDS, PRODUCT_EDITOR_FIELDS } from "@/lib/constants";
+import { BLOG, BLOG_EDITOR_FIELDS, FEATURES, PRODUCT_EDITOR_FIELDS } from "@/lib/constants";
 import Content from "@/context/content";
 import { useRouter, useSearchParams } from "next/navigation";
 import useSWR from "swr";
@@ -22,6 +21,7 @@ function AddForm() {
   const selected = JSON.parse(query.get("selected")!);
   const fetch_url = query.get("fetch_url");
   const metaState = JSON.parse(query.get("metaData")!);
+  const isCopy = JSON.parse(query.get("copy")!);
   const { data } = useSWR(fetch_url, getData);
   const [submiting, setSubmiting] = useState(false);
   console.log(data);
@@ -45,7 +45,7 @@ function AddForm() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ data: { ...data, type }, metaData: metaState }),
+        body: JSON.stringify({ data: { ...data, type }, metaData: metaState, isCopy }),
       });
       if (res.status === 200) {
         router.replace("/");
@@ -63,14 +63,18 @@ function AddForm() {
       <CardContent>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-            {formFields.map((f: FormField, i: number) => (
-              <FormField
-                key={f.name}
-                control={form.control}
-                name={f.name as any}
-                render={({ field }) => <Field field={field} f={f} />}
-              />
-            ))}
+            {formFields.map((f: FormField, i: number) =>
+              f.type === FEATURES ? (
+                <Field key={f.name} f={f} />
+              ) : (
+                <FormField
+                  key={f.name}
+                  control={form.control}
+                  name={f.name as any}
+                  render={({ field }) => <Field field={field} f={f} />}
+                />
+              )
+            )}
             <LoadingButton type="submit" disabled={submiting}>
               Submit
             </LoadingButton>

@@ -10,16 +10,20 @@ const set = (keyName: string, keyValue: string[], ttl: number) => {
 };
 
 const get = (keyName: string): string[] => {
-  const data = localStorage?.getItem(keyName);
-  if (!data) {
+  if (typeof window !== "undefined") {
+    const data = localStorage?.getItem(keyName);
+    if (!data) {
+      return [];
+    }
+    const item = JSON.parse(data);
+    if (Date.now() > item.ttl) {
+      localStorage.removeItem(keyName);
+      return [];
+    }
+    return item.value;
+  } else {
     return [];
   }
-  const item = JSON.parse(data);
-  if (Date.now() > item.ttl) {
-    localStorage.removeItem(keyName);
-    return [];
-  }
-  return item.value;
 };
 
 function useMedia(initialState = 0) {

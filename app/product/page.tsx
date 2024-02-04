@@ -21,7 +21,7 @@ const Products = (props: Props) => {
     <ProductList
       Action={WishList}
       SubActions={action}
-      productPermissions={{ select: true, delete: true, edit: true }}
+      productPermissions={{ select: true, delete: true, edit: true, copy: true }}
     />
   );
 };

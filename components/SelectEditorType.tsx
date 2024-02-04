@@ -11,11 +11,6 @@ function SelectEditorType() {
   const _type = params.get("type");
   const isLocked = params.get("isLocked");
   console.log(_type, isLocked);
-  useEffect(() => {
-    if (_type) {
-      changeContentType(_type);
-    }
-  }, [_type]);
   const {
     content: { type },
     changeContentType,

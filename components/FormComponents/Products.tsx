@@ -47,7 +47,7 @@ const AddProductDialog = ({ onToggle, isOpen, onSubmit, preSelected }) => {
         <ProductList
           onSubmit={onSubmit}
           Action={AddSelected}
-          productPermissions={{ edit: false, select: true, delete: false }}
+          productPermissions={{ edit: false, select: true, delete: false, copy: false }}
           preSelected={preSelected}
         />
       </DialogContent>

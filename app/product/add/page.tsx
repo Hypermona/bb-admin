@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Form, FormField } from "@/components/ui/form";
 import { ARRAY_FEILD, PRODUCT_FIELDS } from "@/lib/constants";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import React, { useMemo, useRef, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 
@@ -18,8 +18,10 @@ function AddProduct() {
   const query = useSearchParams();
   const [loading, setLoading] = useState(false);
   const state = JSON.parse(query.get("data")!);
+  const isCopy = JSON.parse(query.get("copy")!);
   const form = useForm({ defaultValues: JSON.parse(query.get("data")!) });
   console.log(query.get("selected"));
+  const router = useRouter();
 
   const action = useMemo(
     () => (
@@ -31,24 +33,29 @@ function AddProduct() {
             submitRef.current?.click();
           }}
         >
-          {!!state ? "Update" : "Submit"}
+          {!!state && !isCopy ? "Update" : "Submit"}
         </LoadingButton>
       </>
     ),
-    [state, loading]
+    [state, loading, isCopy]
   );
   const onSubmit = async (data) => {
     setLoading(true);
-    let payload = !!state
-      ? { id: state?.id, data: data }
-      : { data: { ...data, search: data.title.toLocaleLowerCase() } };
-    await fetch("/api/product/add", {
-      method: !!state ? "PUT" : "POST",
+    console.log(data);
+    let payload =
+      !!state && !isCopy
+        ? { id: state?.id, data: data }
+        : { data: { ...data, id: null, search: data.title.toLocaleLowerCase() } };
+    const res = await fetch("/api/product/add", {
+      method: !!state && !isCopy ? "PUT" : "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(payload),
     });
+    if (res.status === 200) {
+      router.replace("/product");
+    }
     setLoading(false);
   };
   return (

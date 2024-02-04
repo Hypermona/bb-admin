@@ -36,27 +36,6 @@ function AdvancedSearch({ onSubmit }: Props) {
               name="title"
               render={({ field }) => <Input type="text" placeholder="Title" {...field} />}
             />
-
-            {/* <FormField
-              control={form.control}
-              name="brand"
-              render={({ field }) => (
-                <FormItem>
-                  <Select onValueChange={field.onChange} defaultValue={field.value}>
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select a verified email to display" />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      <SelectItem value="m@example.com">Ratings</SelectItem>
-                      <SelectItem value="m@google.com">price</SelectItem>
-                      <SelectItem value="m@support.com">m@support.com</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </FormItem>
-              )}
-            /> */}
             <Button type="submit" variant={"secondary"}>
               Search
             </Button>

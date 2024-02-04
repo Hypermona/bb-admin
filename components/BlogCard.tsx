@@ -4,7 +4,7 @@ import useSWR from "swr";
 import { getData } from "@/lib/dataservices";
 import Link from "next/link";
 import { Button } from "./ui/button";
-import { Pencil2Icon, TrashIcon } from "@radix-ui/react-icons";
+import { CopyIcon, Pencil2Icon, TrashIcon } from "@radix-ui/react-icons";
 
 interface Data {
   title?: string;
@@ -39,6 +39,20 @@ function BlogCard({ metaData }: { metaData: any }) {
           >
             <Button>
               <Pencil2Icon />
+            </Button>
+          </Link>
+          <Link
+            href={{
+              pathname: "/add",
+              query: {
+                fetch_url: metaData?.secure_url,
+                metaData: JSON.stringify({ public_id: metaData.public_id }),
+                copy: true,
+              },
+            }}
+          >
+            <Button>
+              <CopyIcon />
             </Button>
           </Link>
         </div>

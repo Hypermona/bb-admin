@@ -9,7 +9,7 @@ import AdvancedSearch from "../advancedSearch";
 type Props = {
   Action?: React.FC<actionType>;
   SubActions?: JSX.Element;
-  productPermissions: { select: boolean; delete: boolean; edit: boolean };
+  productPermissions: { select: boolean; delete: boolean; edit: boolean; copy: boolean };
   onSubmit?: Function;
   preSelected?: resProductFields[];
 };
@@ -28,7 +28,7 @@ const ProductList = ({ Action, SubActions, productPermissions, onSubmit, preSele
   );
   useEffect(() => {
     console.log("Iam recreated", preSelected);
-  }, [productData]);
+  }, [preSelected, productData]);
   console.log("isValidating", isValidating);
   const handleDelete = async (id) => {
     await deleteData(id);
@@ -68,7 +68,7 @@ const ProductList = ({ Action, SubActions, productPermissions, onSubmit, preSele
         {SubActions}
       </div>
     ),
-    [selected]
+    [Action, SubActions, onSubmit, selected]
   );
   if (!isLoading) {
     return (

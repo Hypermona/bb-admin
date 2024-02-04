@@ -21,6 +21,6 @@ export const storeFile = async (path: string, data: object) => {
 export const getSlug = (str: string) => {
   return slugify(str, { lower: true, strict: true, trim: true });
 };
-export const getSlutJsonfilename = (str: string) => {
+export const getSlugJsonfilename = (str: string) => {
   return `${getSlug(str)}.json`;
 };

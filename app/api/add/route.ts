@@ -2,7 +2,7 @@ import { NextRequest } from "next/server";
 import { v2 as cloudinary } from "cloudinary";
 import path from "path";
 import { rm } from "fs";
-import { getSlutJsonfilename, storeFile } from "@/lib/helpers";
+import { getSlugJsonfilename, storeFile } from "@/lib/helpers";
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -15,15 +15,19 @@ export async function POST(req: NextRequest) {
   if (req.body) {
     const body = await req.json();
     console.log("client", body);
-    const filename = getSlutJsonfilename(body?.data?.title);
+    const filename = getSlugJsonfilename(body?.data?.title);
     await storeFile(path.join("db", filename), body?.data);
     const res = await cloudinary.uploader.upload(path.join("db", filename), {
-      ...(!body?.metaData?.public_id
+      ...(body?.isCopy || !body?.metaData?.public_id
         ? { folder: "bb-admin/blogs", use_filename: true }
         : { public_id: body?.metaData?.public_id }),
       resource_type: "raw",
       overwrite: !!body?.metaData?.public_id,
       invalidate: !!body?.metaData?.public_id,
+      context: `title=${body?.data?.title || ""}|poster=${body?.data?.image || ""}|category=${
+        body?.data?.category || ""
+      }|price=${body?.data?.priceCategory}|| ""`,
+      tags: body?.data?.tags || [],
     });
     rm(path.join("db", filename), (err) => {
       console.log(err);

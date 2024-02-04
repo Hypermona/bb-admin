@@ -1,14 +1,15 @@
 "use Client";
-import React, { useId } from "react";
-import { FormControl, FormDescription, FormItem, FormLabel } from "../ui/form";
+import React, { useId, useRef } from "react";
+import { FormControl, FormDescription, FormField, FormItem, FormLabel } from "../ui/form";
 import { Input } from "../ui/input";
-import { ControllerRenderProps, FieldValues } from "react-hook-form";
+import { ControllerRenderProps, FieldValues, useFormContext } from "react-hook-form";
 import { Textarea } from "../ui/textarea";
 import {
   ARRAY_FEILD,
   FAQ,
   FEATURES,
   FILE,
+  MULTI_SELECT,
   PRODUCT_CARD,
   RICH_TEXT,
   SELECT,
@@ -26,6 +27,21 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
+import { Card } from "../ui/card";
+import SelectSearch from "../SelectSearch";
+import {
+  Dialog,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "../ui/dialog";
+import { Button } from "../ui/button";
+import { getData } from "@/lib/dataservices";
+import useSWR from "swr";
+import MultipleSearchSelect from "../multipleSearchSelect";
+import AddFeature from "../addFeature";
 
 type Props = {
   field?: ControllerRenderProps<BlogOrProductCards, any>;
@@ -51,22 +67,61 @@ const fqaInitialValues = {
   answer: "",
 };
 
-const SelectWrapper = ({ field, f }) => {
+const SelectWrapper = ({ field, f, width }) => {
   return (
-    <Select onValueChange={field.onChange} defaultValue={field.value}>
-      <SelectTrigger className="w-[180px]">
-        <SelectValue placeholder={f.placeholder} />
-      </SelectTrigger>
-      <SelectContent>
-        <SelectGroup>
-          {f?.options?.map((ele) => (
-            <SelectItem key={ele.value} value={ele.value}>
-              {ele.label}
-            </SelectItem>
-          ))}
-        </SelectGroup>
-      </SelectContent>
-    </Select>
+    <div className={`w-[${width}px]`}>
+      <Select onValueChange={field.onChange} defaultValue={field.value}>
+        <SelectTrigger>
+          <SelectValue placeholder={f.placeholder} />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectGroup>
+            {f?.options?.map((ele) => (
+              <SelectItem key={ele.value} value={ele.value}>
+                {ele.label}
+              </SelectItem>
+            ))}
+          </SelectGroup>
+        </SelectContent>
+      </Select>
+    </div>
+  );
+};
+
+const RenderFeatures = ({ field, f }: Props) => {
+  const { control } = useFormContext();
+  const { data: processorsList } = useSWR(
+    "https://res.cloudinary.com/hypermona/raw/upload/bb-admin/features/feature__processors.json",
+    getData,
+    { revalidateOnMount: true }
+  );
+  return (
+    <Card className="p-2">
+      {f.properties.map((p) =>
+        p.category === control._formValues.category ? (
+          <div key={p.name} className="flex items-center mb-2 w-full">
+            <FormLabel className="w-[200px]">{p.label}</FormLabel>
+            <FormField
+              key={p.name}
+              control={control}
+              name={`${f.name}.${p.name}`}
+              render={({ field }) =>
+                p.type === "select" ? (
+                  <SelectSearch
+                    selected={field.value}
+                    handleSelect={(value) => field.onChange(value)}
+                    options={processorsList}
+                    NoResult={AddFeature}
+                  />
+                ) : (
+                  <Input {...field} />
+                )
+              }
+            />
+          </div>
+        ) : null
+      )}
+    </Card>
   );
 };
 
@@ -79,7 +134,7 @@ const RenderFieldByType = ({ field, f }: Props) => {
     case RICH_TEXT:
       return <RichEditor onChange={(v) => field?.onChange(v)} value={field?.value} />;
     case SELECT:
-      return <SelectWrapper field={field} f={f} />;
+      return <SelectWrapper field={field} f={f} width={180} />;
     case FAQ:
       return (
         <ArrayField
@@ -87,6 +142,15 @@ const RenderFieldByType = ({ field, f }: Props) => {
           initialValues={fqaInitialValues}
           properties={faqProperties}
           onSubmit={() => {}}
+        />
+      );
+    case MULTI_SELECT:
+      return (
+        <MultipleSearchSelect
+          selected={field?.value}
+          handleSelect={(v) => field?.onChange(v)}
+          optionsPath="tags/tags"
+          NoResult={<AddFeature filename="tags" apiPath="tags" />}
         />
       );
     case ARRAY_FEILD:
@@ -98,6 +162,8 @@ const RenderFieldByType = ({ field, f }: Props) => {
           onSubmit={() => {}}
         />
       );
+    case FEATURES:
+      return <RenderFeatures field={field} f={f} />;
     case PRODUCT_CARD:
       return <Products field={field} />;
     default:
