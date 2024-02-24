@@ -46,7 +46,7 @@ const UploadImages = (props: Props) => {
       Promise.all(
         files.map((file) => {
           const formData = new FormData();
-          formData.append("file", file!);
+          formData.append("file", file);
           formData.append("folder", "bb-poc/images");
           formData.append("upload_preset", "" + "u5yrn1d9-bb-poc");
           return axios.request({
@@ -72,6 +72,36 @@ const UploadImages = (props: Props) => {
       });
     }
   }
+  const uploadImagebyURL = () => {
+    const urlInput = document.getElementById("library-images-url") as HTMLInputElement;
+    if (urlInput.value) {
+      let tempimages = {};
+      tempimages["Image"] = { name: "Image" };
+      const formData = new FormData();
+      formData.append("file", urlInput?.value);
+      formData.append("folder", "bb-poc/images");
+      formData.append("upload_preset", "" + "u5yrn1d9-bb-poc");
+      axios
+        .request({
+          method: "post",
+          url: "https://api.cloudinary.com/v1_1/hypermona/image/upload/",
+          data: formData,
+          onUploadProgress: (p) => {
+            setImages((prev) => ({
+              ...prev,
+              ["Image"]: { ...prev["Image"], progress: p.loaded / p.total! },
+            }));
+          },
+        })
+        .then((data) => {
+          let imgs: string[] = [];
+          imgs.push(data?.data?.secure_url);
+          addMedia(imgs);
+          setImages({});
+          urlInput.value = "";
+        });
+    }
+  };
   const handleSearch = async () => {
     const searchValue = searchInputRef.current?.value;
     if (searchValue) {
@@ -109,7 +139,7 @@ const UploadImages = (props: Props) => {
               <CardHeader>
                 <CardTitle>Image Library</CardTitle>
               </CardHeader>
-              <CardContent>
+              <CardContent className="flex gap-2">
                 <label htmlFor="library-images">
                   <input
                     multiple
@@ -128,6 +158,10 @@ const UploadImages = (props: Props) => {
                     Upload
                   </Button>
                 </label>
+                <Input type="url" placeholder="https://...." id="library-images-url" />
+                <Button type="button" variant={"secondary"} onClick={uploadImagebyURL}>
+                  submit
+                </Button>
               </CardContent>
             </Card>
             <Card className="overflow-y-auto h-[60vh] mt-1">

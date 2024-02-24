@@ -12,15 +12,25 @@ interface ProductFields {
   title: string;
   image: string;
   price: string;
+  launchDate: string;
   category: string;
   ratings: { rating: number; brand: string; reviewCount: number }[];
-  features: { name: string; icon: string; rating: number }[];
+  standouts: string[];
+  features: Object;
+  cons: string[];
+  highlights: string[];
   links: { link: string; brand: string }[];
   shortDescription: string;
 }
 interface resProductFields extends ProductFields {
   id: string;
 }
+
+type actionType = {
+  selected: resProductFields[];
+  onSubmit?: Function;
+  clearSelected?: Function;
+};
 
 type BlogOrProductCards =
   | {
@@ -49,6 +59,12 @@ type EditorFields = {
   features: FormField;
   category: FormField;
   links: FormField;
+  launchDate: FormField;
+  cons: FormField;
+  standouts: FormField;
+  highlights: FormField;
+  tags: FormField;
+  priceCategory: FormField;
 };
 
 interface WishList {

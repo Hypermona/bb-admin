@@ -12,6 +12,20 @@
  
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
+
+    --text-paragraph:rgb(68, 68, 76);
+    --text-h1:rgb(68, 68, 76);
+    --text-h2:rgb(68, 68, 76);
+    --text-h3:rgb(104, 105, 112);
+    --text-quote:rgb(101, 103, 107);
+    --text-code:rgb(203, 202, 202);
+    --text-hashtag:rgba(197, 216, 255, 0.996);
+    --text-hashtag-border:rgba(88, 144, 255, 0.3);
+    --text-link-hover:rgb(63, 108, 212);
+    --code-background:rgb(25, 33, 44);
+    --table-cell-border:#333877;
+    --code-action-color: rgba(204, 204, 204, 0.5);
+
  
     --card: 0 0% 100%;
     --card-foreground: 222.2 84% 4.9%;
@@ -69,6 +83,19 @@
     --destructive-foreground: 0 85.7% 97.3%;
  
     --ring: 217.2 32.6% 17.5%;
+
+    --text-paragraph:rgb(178, 180, 192);
+    --text-h1:rgb(189, 191, 202);
+    --text-h2:rgb(189, 191, 202);
+    --text-h3:rgb(131, 132, 140);
+    --text-quote:rgb(101, 103, 107);
+    --text-code:rgb(37, 48, 65);
+    --text-hashtag:rgba(88, 144, 255, 0.15);
+    --text-hashtag-border:rgba(88, 144, 255, 0.3);
+    --text-link-hover:rgb(63, 108, 212);
+    --code-background:rgb(25, 33, 44);
+    --table-cell-border:#333877;
+    --code-action-color: rgba(204, 204, 204, 0.5);
   }
 }
  

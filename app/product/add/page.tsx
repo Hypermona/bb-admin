@@ -1,13 +1,14 @@
 "use client";
 import Field from "@/components/FormComponents/Field";
+import LoadingButton from "@/components/LoadingButton";
 import UploadImages from "@/components/UploadImages";
 import Header from "@/components/product/Header";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Form, FormField } from "@/components/ui/form";
 import { ARRAY_FEILD, PRODUCT_FIELDS } from "@/lib/constants";
-import { useSearchParams } from "next/navigation";
-import React, { useMemo, useRef } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import React, { useMemo, useRef, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 
 type Props = {};
@@ -15,34 +16,47 @@ type Props = {};
 function AddProduct() {
   const submitRef = useRef<HTMLInputElement>(null);
   const query = useSearchParams();
+  const [loading, setLoading] = useState(false);
   const state = JSON.parse(query.get("data")!);
+  const isCopy = JSON.parse(query.get("copy")!);
   const form = useForm({ defaultValues: JSON.parse(query.get("data")!) });
   console.log(query.get("selected"));
+  const router = useRouter();
 
   const action = useMemo(
     () => (
       <>
         <UploadImages />
-        <Button
+        <LoadingButton
+          disabled={loading}
           onClick={() => {
             submitRef.current?.click();
           }}
         >
-          {!!state ? "Update" : "Submit"}
-        </Button>
+          {!!state && !isCopy ? "Update" : "Submit"}
+        </LoadingButton>
       </>
     ),
-    [state]
+    [state, loading, isCopy]
   );
   const onSubmit = async (data) => {
-    let payload = !!state ? { id: state?.id, data: data } : { data: data };
-    await fetch("/api/product/add", {
-      method: !!state ? "PUT" : "POST",
+    setLoading(true);
+    console.log(data);
+    let payload =
+      !!state && !isCopy
+        ? { id: state?.id, data: data }
+        : { data: { ...data, id: null, search: data.title.toLocaleLowerCase() } };
+    const res = await fetch("/api/product/add", {
+      method: !!state && !isCopy ? "PUT" : "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(payload),
     });
+    if (res.status === 200) {
+      router.replace("/product");
+    }
+    setLoading(false);
   };
   return (
     <div className="scroll-smooth">
