@@ -22,12 +22,18 @@ function AddForm() {
   const fetch_url = query.get("fetch_url");
   const metaState = JSON.parse(query.get("metaData")!);
   const isCopy = JSON.parse(query.get("copy")!);
+  const _type = query.get("type")!;
   const { data } = useSWR(fetch_url, getData);
   const [submiting, setSubmiting] = useState(false);
   console.log(data);
   useEffect(() => {
-    data?.type && changeContentType(data?.type);
-  }, [data?.type]);
+    if (!!data?.type) {
+      changeContentType(data?.type);
+    }
+    if (!!_type) {
+      changeContentType(_type);
+    }
+  }, [data?.type, _type]);
 
   const formFields = type === BLOG ? BLOG_EDITOR_FIELDS : PRODUCT_EDITOR_FIELDS;
 
@@ -35,7 +41,7 @@ function AddForm() {
     defaultValues: { ...data, productCards: data?.productCards || selected },
   });
 
-  console.log("type", type);
+  console.log("type", type, "__type", _type);
   const onSubmit = async (data: any) => {
     setSubmiting(true);
     console.log(data);

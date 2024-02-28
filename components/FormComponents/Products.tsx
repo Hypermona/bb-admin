@@ -2,24 +2,10 @@ import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { Card, CardContent } from "../ui/card";
 import { Button } from "../ui/button";
 import { DragHandleDots2Icon, Pencil2Icon, TrashIcon } from "@radix-ui/react-icons";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
-import { FormControl, FormField, FormItem, FormLabel } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { ControllerRenderProps, useFieldArray, useFormContext } from "react-hook-form";
-import { FEATURES, FILE, PRODUCT_FIELDS, RATINGS, RICH_TEXT, TEXTAREA } from "@/lib/constants";
-import { Textarea } from "../ui/textarea";
-import RichEditor from "../Editor/RichEditor";
-import ArrayField from "./ArrayField";
-import ProductCard from "../product/Card";
-import useSWR, { SWRResponse } from "swr";
-import { getData } from "@/lib/dataservices";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
+
+import { ControllerRenderProps } from "react-hook-form";
+
 import HorizontalCard from "../product/HorizontalCard";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import ProductList from "../product/ProductList";

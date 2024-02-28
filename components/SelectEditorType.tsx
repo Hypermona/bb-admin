@@ -8,9 +8,8 @@ type Props = {};
 
 function SelectEditorType() {
   const params = useSearchParams();
-  const _type = params.get("type");
   const isLocked = params.get("isLocked");
-  console.log(_type, isLocked);
+  console.log(isLocked);
   const {
     content: { type },
     changeContentType,
