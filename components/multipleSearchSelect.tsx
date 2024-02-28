@@ -12,10 +12,11 @@ import {
   CommandItem,
 } from "@/components/ui/command";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { CaretSortIcon, CheckCircledIcon } from "@radix-ui/react-icons";
+import { CaretSortIcon, CheckCircledIcon, ResetIcon } from "@radix-ui/react-icons";
 import useSWR from "swr";
 import { getData } from "@/lib/dataservices";
 import { ScrollArea } from "./ui/scroll-area";
+import LoadingButton from "./LoadingButton";
 
 interface IMultipleSearchSelect {
   selected: string[];
@@ -31,10 +32,15 @@ export default function MultipleSearchSelect({
   NoResult,
 }: Readonly<IMultipleSearchSelect>) {
   const [open, setOpen] = React.useState(false);
-  const { data: options } = useSWR(
+  const {
+    data: options,
+    isLoading,
+    isValidating,
+    mutate,
+  } = useSWR(
     `https://res.cloudinary.com/hypermona/raw/upload/bb-admin/${optionsPath}.json`,
     getData,
-    { revalidateOnFocus: true }
+    { revalidateOnFocus: false, revalidateOnMount: false, revalidateIfStale: false }
   );
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -49,19 +55,22 @@ export default function MultipleSearchSelect({
           <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-[200px] p-0">
+      <PopoverContent className="w-[100%] p-0">
         <Command>
           <CommandInput placeholder="Search option..." />
           {NoResult ? NoResult : null}
+          <LoadingButton disabled={isLoading || isValidating} onClick={() => mutate()}>
+            <ResetIcon />
+          </LoadingButton>
           <CommandEmpty>{"No option found."}</CommandEmpty>
           <CommandGroup>
-            <ScrollArea className="rounded-md border h-30">
-              {options?.map((option) => (
+            <ScrollArea className="rounded-md border h-72">
+              {options?.map((option: string) => (
                 <CommandItem
                   key={option}
                   value={option}
                   onSelect={(currentValue) => {
-                    console.log(currentValue, selected);
+                    console.log(currentValue, selected, option);
                     let newSelected = [...selected];
                     if (selected.includes(currentValue)) {
                       newSelected = newSelected.filter((s) => s !== currentValue);
@@ -74,7 +83,7 @@ export default function MultipleSearchSelect({
                   <CheckCircledIcon
                     className={cn(
                       "mr-2 h-4 w-4",
-                      selected?.includes(option) ? "opacity-100" : "opacity-0"
+                      selected?.includes(option?.toLocaleLowerCase()) ? "opacity-100" : "opacity-0"
                     )}
                   />
                   {option}

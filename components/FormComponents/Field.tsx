@@ -90,7 +90,7 @@ const SelectWrapper = ({ field, f, width }) => {
 
 const RenderFeatures = ({ field, f }: Props) => {
   const { control } = useFormContext();
-  const { data: processorsList } = useSWR(
+  const { data: processorsList, mutate } = useSWR(
     "https://res.cloudinary.com/hypermona/raw/upload/bb-admin/features/feature__processors.json",
     getData,
     { revalidateOnMount: true }
@@ -112,6 +112,7 @@ const RenderFeatures = ({ field, f }: Props) => {
                     handleSelect={(value) => field.onChange(value)}
                     options={processorsList}
                     NoResult={AddFeature}
+                    mutate={mutate}
                   />
                 ) : (
                   <Input {...field} />
