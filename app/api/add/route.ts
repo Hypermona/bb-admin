@@ -16,8 +16,8 @@ export async function POST(req: NextRequest) {
     const body = await req.json();
     console.log("client", body);
     const filename = getSlugJsonfilename(body?.data?.title);
-    await storeFile(path.join("db", filename), body?.data);
-    const res = await cloudinary.uploader.upload(path.join("db", filename), {
+    await storeFile(filename, body?.data);
+    const res = await cloudinary.uploader.upload(filename, {
       ...(body?.isCopy || !body?.metaData?.public_id
         ? { folder: "bb-admin/blogs", use_filename: true }
         : { public_id: body?.metaData?.public_id }),
@@ -29,7 +29,7 @@ export async function POST(req: NextRequest) {
       }|price=${body?.data?.priceCategory}|| ""`,
       tags: body?.data?.tags || [],
     });
-    rm(path.join("db", filename), (err) => {
+    rm(filename, (err) => {
       console.log(err);
     });
     return new Response(JSON.stringify(res), {
