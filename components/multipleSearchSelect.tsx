@@ -17,12 +17,13 @@ import useSWR from "swr";
 import { getData } from "@/lib/dataservices";
 import { ScrollArea } from "./ui/scroll-area";
 import LoadingButton from "./LoadingButton";
+import AddFeature from "./addFeature";
 
 interface IMultipleSearchSelect {
   selected: string[];
   handleSelect: (s) => void;
   optionsPath: string;
-  NoResult?: JSX.Element;
+  NoResult?: { filename: string; apiPath: string };
 }
 
 export default function MultipleSearchSelect({
@@ -32,16 +33,36 @@ export default function MultipleSearchSelect({
   NoResult,
 }: Readonly<IMultipleSearchSelect>) {
   const [open, setOpen] = React.useState(false);
-  const {
-    data: options,
-    isLoading,
-    isValidating,
-    mutate,
-  } = useSWR(
-    `https://res.cloudinary.com/hypermona/raw/upload/bb-admin/${optionsPath}.json`,
-    getData,
-    { revalidateOnFocus: false, revalidateOnMount: false, revalidateIfStale: false }
-  );
+  const [value, setValue] = React.useState("");
+  const [options, setOptions] = React.useState<string[]>([]);
+  const loadOptions = async () => {
+    let options = await getData(
+      `https://res.cloudinary.com/hypermona/raw/upload/bb-admin/${optionsPath}.json`
+    );
+    setOptions(Array.from(new Set(options?.filter((e) => e))));
+  };
+  React.useEffect(() => {
+    loadOptions();
+  }, []);
+  console.log("op", options);
+
+  const onSelect = (currentValue) => {
+    console.log(currentValue, selected);
+    let newSelected = [...selected];
+    if (selected.includes(currentValue)) {
+      newSelected = newSelected.filter((s) => s !== currentValue);
+    } else {
+      newSelected.push(currentValue);
+    }
+    handleSelect(newSelected);
+  };
+
+  const onAddSuccess = () => {
+    setOptions((prev) => [value, ...prev]);
+    onSelect(value);
+    setValue("");
+  };
+
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
@@ -57,38 +78,36 @@ export default function MultipleSearchSelect({
       </PopoverTrigger>
       <PopoverContent className="w-[100%] p-0">
         <Command>
-          <CommandInput placeholder="Search option..." />
-          {NoResult ? NoResult : null}
-          <LoadingButton disabled={isLoading || isValidating} onClick={() => mutate()}>
-            <ResetIcon />
-          </LoadingButton>
-          <CommandEmpty>{"No option found."}</CommandEmpty>
+          <CommandInput
+            placeholder="Search option..."
+            value={value}
+            onValueChange={(search) => setValue(search)}
+          />
+
+          <CommandEmpty>
+            <AddFeature {...NoResult} value={value} onAddSuccess={onAddSuccess} />
+            <p>{"No option found."}</p>
+          </CommandEmpty>
           <CommandGroup>
             <ScrollArea className="rounded-md border h-72">
-              {options?.map((option: string) => (
-                <CommandItem
-                  key={option}
-                  value={option}
-                  onSelect={(currentValue) => {
-                    console.log(currentValue, selected, option);
-                    let newSelected = [...selected];
-                    if (selected.includes(currentValue)) {
-                      newSelected = newSelected.filter((s) => s !== currentValue);
-                    } else {
-                      newSelected.push(currentValue);
-                    }
-                    handleSelect(newSelected);
-                  }}
-                >
-                  <CheckCircledIcon
-                    className={cn(
-                      "mr-2 h-4 w-4",
-                      selected?.includes(option?.toLocaleLowerCase()) ? "opacity-100" : "opacity-0"
-                    )}
-                  />
-                  {option}
-                </CommandItem>
-              ))}
+              {options.length > 0 &&
+                options.map((option: string) => (
+                  <CommandItem
+                    key={option}
+                    value={option}
+                    onSelect={(currentValue) => onSelect(currentValue)}
+                  >
+                    <CheckCircledIcon
+                      className={cn(
+                        "mr-2 h-4 w-4",
+                        selected?.includes(option?.toLocaleLowerCase())
+                          ? "opacity-100"
+                          : "opacity-0"
+                      )}
+                    />
+                    {option}
+                  </CommandItem>
+                ))}
             </ScrollArea>
           </CommandGroup>
         </Command>

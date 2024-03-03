@@ -34,15 +34,15 @@ export async function POST(req: NextRequest) {
       newFeature = [{ value: slugValue, label: body?.data?.value }];
     }
     console.log("final", newFeature);
-    await storeFile(path.join("db", filename), newFeature);
-    const res = await cloudinary.uploader.upload(path.join("db", filename), {
+    await storeFile(filename, newFeature);
+    const res = await cloudinary.uploader.upload(filename, {
       folder: "bb-admin/features/",
       public_id: filename,
       resource_type: "raw",
       overwrite: true,
       invalidate: true,
     });
-    rm(path.join("db", filename), (err) => {
+    rm(filename, (err) => {
       console.log(err);
     });
     return new Response(JSON.stringify(res), {

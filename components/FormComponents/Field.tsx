@@ -90,11 +90,6 @@ const SelectWrapper = ({ field, f, width }) => {
 
 const RenderFeatures = ({ field, f }: Props) => {
   const { control } = useFormContext();
-  const { data: processorsList, mutate } = useSWR(
-    "https://res.cloudinary.com/hypermona/raw/upload/bb-admin/features/feature__processors.json",
-    getData,
-    { revalidateOnMount: true }
-  );
   return (
     <Card className="p-2">
       {f.properties.map((p) =>
@@ -110,9 +105,12 @@ const RenderFeatures = ({ field, f }: Props) => {
                   <SelectSearch
                     selected={field.value}
                     handleSelect={(value) => field.onChange(value)}
-                    options={processorsList}
-                    NoResult={AddFeature}
-                    mutate={mutate}
+                    // options={processorsList}
+                    NoResult={{
+                      filename: "tags",
+                      apiPath: "tags",
+                    }}
+                    // mutate={mutate}
                   />
                 ) : (
                   <Input {...field} />
@@ -151,7 +149,7 @@ const RenderFieldByType = ({ field, f }: Props) => {
           selected={field?.value}
           handleSelect={(v) => field?.onChange(v)}
           optionsPath="tags/tags"
-          NoResult={<AddFeature filename="tags" apiPath="tags" />}
+          NoResult={{ filename: "tags", apiPath: "tags" }}
         />
       );
     case ARRAY_FEILD:
