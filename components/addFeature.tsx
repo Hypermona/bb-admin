@@ -1,15 +1,3 @@
-import { RefObject, useRef } from "react";
-import {
-  Dialog,
-  DialogTrigger,
-  DialogHeader,
-  DialogTitle,
-  DialogFooter,
-  DialogContent,
-} from "./ui/dialog";
-import { Input } from "./ui/input";
-import { Button } from "./ui/button";
-import { DialogClose } from "@radix-ui/react-dialog";
 import { toast } from "./ui/use-toast";
 import useSWRMutation from "swr/mutation";
 import LoadingButton from "./LoadingButton";
@@ -55,27 +43,8 @@ export default function AddFeature({
   };
   const { trigger, isMutating } = useSWRMutation("/api/" + apiPath, handleSubmit);
   return (
-    // <Dialog>
-    //   <DialogTrigger asChild>
     <LoadingButton disabled={isMutating} variant="outline" onClick={() => trigger()}>
       Add this
     </LoadingButton>
-    //   </DialogTrigger>
-    //   <DialogContent className="sm:max-w-[425px]">
-    //     <DialogHeader>
-    //       <DialogTitle>Add Feature</DialogTitle>
-    //     </DialogHeader>
-    //     <div className="grid gap-4 py-4">
-    //       <Input ref={inputRef} id="feature" className="col-span-3" />
-    //     </div>
-    //     <DialogFooter>
-    //       <DialogClose asChild>
-    //         <Button type="submit" onClick={handleSubmit}>
-    //           Save changes
-    //         </Button>
-    //       </DialogClose>
-    //     </DialogFooter>
-    //   </DialogContent>
-    // </Dialog>
   );
 }
