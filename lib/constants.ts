@@ -15,6 +15,7 @@ export const ARRAY_FEILD = "ARRAY_FEILD";
 export const SELECT = "SELECT";
 export const DATE = "DATE";
 export const MULTI_SELECT = "MULTI_SELECT";
+export const IMAGE = "IMAGE";
 
 const categoryOptions = [
   {
@@ -121,7 +122,7 @@ export const EDITOR_FIELDS: EditorFields = {
   image: {
     name: "image",
     label: "Cover Image URL",
-    type: TEXT,
+    type: IMAGE,
   },
   category: {
     name: "category",

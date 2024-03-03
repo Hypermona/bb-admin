@@ -9,6 +9,7 @@ import {
   FAQ,
   FEATURES,
   FILE,
+  IMAGE,
   MULTI_SELECT,
   PRODUCT_CARD,
   RICH_TEXT,
@@ -42,6 +43,7 @@ import { getData } from "@/lib/dataservices";
 import useSWR from "swr";
 import MultipleSearchSelect from "../multipleSearchSelect";
 import AddFeature from "../addFeature";
+import ImageUrlUpload from "../ImageUrlUpload";
 
 type Props = {
   field?: ControllerRenderProps<BlogOrProductCards, any>;
@@ -126,6 +128,8 @@ const RenderFeatures = ({ field, f }: Props) => {
 
 const RenderFieldByType = ({ field, f }: Props) => {
   switch (f.type) {
+    case IMAGE:
+      return <ImageUrlUpload field={field} />;
     case TEXTAREA:
       return <Textarea {...field} />;
     case FILE:
