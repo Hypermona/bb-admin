@@ -5,6 +5,7 @@ import { getData } from "@/lib/dataservices";
 import Link from "next/link";
 import { Button } from "./ui/button";
 import { CopyIcon, Pencil2Icon, TrashIcon } from "@radix-ui/react-icons";
+import { getFileName } from "@/lib/helpers";
 
 interface Data {
   title?: string;
@@ -65,7 +66,13 @@ function BlogCard({ metaData }: { metaData: any }) {
           height={250}
         />
         <div className="p-3">
-          <a href="#">
+          <a
+            href={`${process.env.NEXT_PUBLIC_CLIENT_URL}/posts${getFileName(
+              metaData?.public_id,
+              metaData.folder
+            )}`}
+            target="_blank"
+          >
             <h5 className="mb-2 font-bold tracking-tight text-gray-900 dark:text-white">
               {data.title}
             </h5>

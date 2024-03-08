@@ -24,3 +24,7 @@ export const getSlug = (str: string) => {
 export const getSlugJsonfilename = (str: string) => {
   return `${getSlug(str)}.json`;
 };
+
+export const getFileName = (url: string, removeURL: string) => {
+  return url?.split(".")[0].replace(removeURL, "");
+};

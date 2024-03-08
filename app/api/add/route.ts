@@ -2,7 +2,7 @@ import { NextRequest } from "next/server";
 import { v2 as cloudinary } from "cloudinary";
 import path from "path";
 import { rm } from "fs";
-import { getSlugJsonfilename, storeFile } from "@/lib/helpers";
+import { getFileName, getSlugJsonfilename, storeFile } from "@/lib/helpers";
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -10,6 +10,9 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET,
   secure: true,
 });
+
+const getRevalidateURL = (path) =>
+  `${process.env.CLIENT_URL}/api/revalidate?path=${path}&token=${process.env.REVALIDATE_TOKEN}`;
 
 export async function POST(req: NextRequest) {
   if (req.body) {
@@ -29,12 +32,27 @@ export async function POST(req: NextRequest) {
       }|price=${body?.data?.priceCategory}|| ""`,
       tags: body?.data?.tags || [],
     });
+
     rm(filename, (err) => {
       console.log(err);
     });
-    return new Response(JSON.stringify(res), {
-      status: 200,
-    });
+    let revalidateRes = { revalidate: false };
+    if (res?.public_id) {
+      if (body?.metaData?.public_id) {
+        revalidateRes = await (
+          await fetch(getRevalidateURL("posts/" + getFileName(res?.public_id, res?.folder)))
+        ).json();
+      } else {
+        revalidateRes = await (await fetch(getRevalidateURL("/"))).json();
+      }
+      return new Response(JSON.stringify({ res, revalidation: revalidateRes }), {
+        status: 200,
+      });
+    } else {
+      return new Response(JSON.stringify({ res, revalidation: revalidateRes }), {
+        status: 400,
+      });
+    }
   }
 }
 export async function GET() {
