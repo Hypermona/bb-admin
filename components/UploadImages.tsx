@@ -114,7 +114,8 @@ const UploadImages = (props: Props) => {
   async function handleCopy(url: any): Promise<void> {
     await navigator.clipboard.writeText(url);
     toast({
-      description: "Successfuly copied Image Link",
+      dir: "",
+      description: <p className="text-green-600">Successfuly copied Image Link</p>,
     });
   }
 
@@ -172,7 +173,7 @@ const UploadImages = (props: Props) => {
                       className="absolute right-0"
                       variant="outline"
                       size="icon"
-                      onClick={() => image}
+                      onClick={() => handleCopy(image)}
                     >
                       <CopyIcon className="h-4 w-4" />
                     </Button>
