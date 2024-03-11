@@ -5,6 +5,8 @@ import useSWR, { SWRResponse } from "swr";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { deleteData, getData } from "@/lib/dataservices";
 import AdvancedSearch from "../advancedSearch";
+import { toast } from "../ui/use-toast";
+import letConfirm from "@/lib/letConfirm";
 
 type Props = {
   Action?: React.FC<actionType>;
@@ -30,9 +32,25 @@ const ProductList = ({ Action, SubActions, productPermissions, onSubmit, preSele
     console.log("Iam recreated", preSelected);
   }, [preSelected, productData]);
   console.log("isValidating", isValidating);
+
   const handleDelete = async (id) => {
-    await deleteData(id);
-    mutate(productData?.filter((e) => e.id !== id));
+    console.log("id", id);
+    const confirm = await letConfirm();
+    if (confirm) {
+      console.log("confirm");
+      const res = await deleteData(id);
+      console.log("res", res);
+      if (res.failed) {
+        toast({
+          description: <p className="text-red-500">Deleting Post {id} Failed!</p>,
+        });
+      } else {
+        toast({
+          description: <p className="text-green-500">Successfully Deleted {id}</p>,
+        });
+      }
+      mutate(productData?.filter((e) => e.id !== id));
+    }
   };
   const preSelectedMap = new Map(preSelected?.map((ele) => [ele.id, ele]));
   const [selected, setSelected] = useState<Map<string, resProductFields>>(new Map());

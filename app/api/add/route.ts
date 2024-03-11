@@ -79,14 +79,17 @@ export async function DELETE(req: NextRequest) {
   if (req.body) {
     const body = await req.json();
     console.log("bbbb", body);
+    let revalidateRes = { revalidate: false };
     try {
       const result = await cloudinary.uploader.destroy(body?.public_id, { resource_type: "raw" });
-      return new Response(JSON.stringify(result), {
+      let revalidateRes = { revalidate: false };
+      revalidateRes = await (await fetch(getRevalidateURL("/"))).json();
+      return new Response(JSON.stringify({ result, revalidation: revalidateRes }), {
         status: 200,
       });
     } catch (e) {
       console.log(e);
-      return new Response(JSON.stringify(e), {
+      return new Response(JSON.stringify({ e, revalidation: revalidateRes }), {
         status: 400,
       });
     }

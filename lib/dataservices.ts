@@ -8,7 +8,7 @@ export async function getData(url) {
 export async function deleteData(id) {
   let res = await fetch("/api/product/", { method: "DELETE", body: JSON.stringify({ id: id }) });
   if (!res.ok) {
-    console.log("delete failed");
+    return { failed: true };
   }
   return res.json();
 }
