@@ -85,9 +85,11 @@ export default function MultipleSearchSelect({
           />
 
           <CommandEmpty>
-            <AddFeature {...NoResult} value={value} onAddSuccess={onAddSuccess} />
             <p>{"No option found."}</p>
           </CommandEmpty>
+          {value && !options.includes(value) && (
+            <AddFeature {...NoResult} value={value} onAddSuccess={onAddSuccess} />
+          )}
           <CommandGroup>
             <ScrollArea className="rounded-md border h-72">
               {options.length > 0 &&
