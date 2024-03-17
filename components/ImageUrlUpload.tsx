@@ -32,7 +32,7 @@ const ImageUrlUpload = ({ field }: Props) => {
       url = url.split("?")[0];
       const formData = new FormData();
       formData.append("file", url);
-      formData.append("folder", "bb-poc/images");
+      formData.append("folder", "bb-admin/images");
       formData.append("upload_preset", "" + "u5yrn1d9-bb-poc");
       axios
         .post("https://api.cloudinary.com/v1_1/hypermona/image/upload/", formData)

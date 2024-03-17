@@ -12,7 +12,7 @@ export async function POST(req: Request) {
   let posts = Array;
   return cloudinary.search
     .expression(
-      "folder:bb-poc/images* AND filename:" + body.searchValue // add your folder
+      "folder:bb-admin/images* AND filename:" + body.searchValue // add your folder
     )
     .sort_by("public_id", "desc")
     .max_results(10)

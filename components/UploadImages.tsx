@@ -47,7 +47,7 @@ const UploadImages = (props: Props) => {
         files.map((file) => {
           const formData = new FormData();
           formData.append("file", file);
-          formData.append("folder", "bb-poc/images");
+          formData.append("folder", "bb-admin/images");
           formData.append("upload_preset", "" + "u5yrn1d9-bb-poc");
           return axios.request({
             method: "post",
@@ -79,7 +79,7 @@ const UploadImages = (props: Props) => {
       tempimages["Image"] = { name: "Image" };
       const formData = new FormData();
       formData.append("file", urlInput?.value);
-      formData.append("folder", "bb-poc/images");
+      formData.append("folder", "bb-admin/images");
       formData.append("upload_preset", "" + "u5yrn1d9-bb-poc");
       axios
         .request({

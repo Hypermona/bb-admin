@@ -18,9 +18,9 @@ export async function GET(req: Request) {
   let res: resProductFields[] = [];
   querySnapshot.forEach((doc) => {
     let data: ProductFields = <ProductFields>doc.data();
-    res.push({ id: doc.id, ...data });
+    res.push({ ...data, id: doc.id });
   });
-
+  console.log(res);
   return NextResponse.json(res);
 }
 export async function DELETE(request: Request) {

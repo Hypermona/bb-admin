@@ -137,6 +137,7 @@
 }
 .PlaygroundEditorTheme__tableCell {
   border: 1px solid var(--table-cell-border);
+  background-color: transparent !important;
   width: 75px;
   min-width: 75px;
   vertical-align: top;
