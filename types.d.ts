@@ -72,3 +72,9 @@ interface WishList {
   name: string;
   products: string[];
 }
+interface Iapps {
+  id: string;
+  label: string;
+  logo?: StaticImageData;
+  folder: string;
+}

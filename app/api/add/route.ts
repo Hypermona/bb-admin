@@ -1,6 +1,5 @@
 import { NextRequest } from "next/server";
 import { v2 as cloudinary } from "cloudinary";
-import path from "path";
 import { rm } from "fs";
 import { getFileName, getSlugJsonfilename, storeFile } from "@/lib/helpers";
 
@@ -19,10 +18,11 @@ export async function POST(req: NextRequest) {
     const body = await req.json();
     console.log("client", body);
     const filename = getSlugJsonfilename(body?.data?.title);
+    const folder = body?.folder;
     await storeFile(filename, body?.data);
     const res = await cloudinary.uploader.upload(filename, {
       ...(body?.isCopy || !body?.metaData?.public_id
-        ? { folder: "bb-admin/blogs", use_filename: true }
+        ? { folder: `${folder}/blogs`, use_filename: true }
         : { public_id: body?.metaData?.public_id }),
       resource_type: "raw",
       overwrite: !!body?.metaData?.public_id,
@@ -55,11 +55,12 @@ export async function POST(req: NextRequest) {
     }
   }
 }
-export async function GET() {
+export async function GET(req) {
+  const folder = new URL(req.url).searchParams.get("folder");
   let posts = Array;
   return cloudinary.search
     .expression(
-      "folder:bb-admin/blogs/*" // add your folder
+      `folder:${folder}/blogs/*` // add your folder
     )
     .sort_by("public_id", "desc")
     .max_results(10)

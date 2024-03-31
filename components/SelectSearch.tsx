@@ -12,7 +12,7 @@ import {
   CommandItem,
 } from "@/components/ui/command";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { CaretSortIcon, CheckCircledIcon, ResetIcon } from "@radix-ui/react-icons";
+import { CaretSortIcon, CheckCircledIcon } from "@radix-ui/react-icons";
 import { ScrollArea } from "./ui/scroll-area";
 import AddFeature from "./addFeature";
 import { getSlug } from "@/lib/helpers";
@@ -38,8 +38,8 @@ export default function SelectSearch({
   selected,
   // options,
   handleSelect, // NoResult,
-} // mutate,
-: Readonly<ISelectSearch>) {
+  // mutate,
+}: Readonly<ISelectSearch>) {
   const [open, setOpen] = React.useState(false);
   const [value, setValue] = React.useState("");
   const [options, setOptions] = React.useState<TSelect[]>([]);

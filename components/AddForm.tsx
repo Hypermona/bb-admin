@@ -13,7 +13,7 @@ import LoadingButton from "./LoadingButton";
 
 function AddForm() {
   const {
-    content: { type },
+    content: { type, appDetails },
     changeContentType,
   } = Content.useContainer();
   const router = useRouter();
@@ -51,10 +51,15 @@ function AddForm() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ data: { ...data, type }, metaData: metaState, isCopy }),
+        body: JSON.stringify({
+          data: { ...data, type },
+          metaData: metaState,
+          isCopy,
+          folder: appDetails.folder,
+        }),
       });
       if (res.status === 200) {
-        router.replace("/");
+        router.replace("/home");
       }
     } catch (err) {
       console.log(err);
@@ -64,7 +69,11 @@ function AddForm() {
   return (
     <Card className="w-[785px]">
       <CardHeader>
-        <CardTitle>Add Content</CardTitle>
+        <CardTitle>
+          <p className="text-slate-300 tracking-tight font-bold text-3xl">
+            Add Content for {appDetails?.label}
+          </p>
+        </CardTitle>
       </CardHeader>
       <CardContent>
         <Form {...form}>

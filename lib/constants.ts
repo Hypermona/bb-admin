@@ -1,4 +1,5 @@
 import { Features_list } from "./features";
+import BbImage from "../app/images/bb.png";
 
 export const TEXT = "text";
 export const NUMBER = "number";
@@ -16,6 +17,20 @@ export const SELECT = "SELECT";
 export const DATE = "DATE";
 export const MULTI_SELECT = "MULTI_SELECT";
 export const IMAGE = "IMAGE";
+
+export const APPS: Iapps[] = [
+  {
+    id: "buyingBird",
+    label: "Buying Bird",
+    folder: "bb-admin",
+    logo: BbImage,
+  },
+  {
+    id: "geeksByNerd",
+    label: "Geeks By Nerd",
+    folder: "gbn-admin",
+  },
+];
 
 const categoryOptions = [
   {

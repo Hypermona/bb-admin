@@ -1,69 +1,51 @@
 "use client";
 
-import BlogCard from "@/components/BlogCard";
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { toast } from "@/components/ui/use-toast";
-import { getData } from "@/lib/dataservices";
-import letConfirm from "@/lib/letConfirm";
-import Link from "next/link";
+import React from "react";
+
+import Image from "next/image";
+import { APPS } from "@/lib/constants";
+import Content from "@/context/content";
 import { useRouter } from "next/navigation";
-import useSWR from "swr";
 
-export default function Home() {
+type Props = {};
+
+const Page = (props: Props) => {
+  const { changeAppDetails } = Content.useContainer();
   const router = useRouter();
-  const addNewBlog = () => router.push("/add");
-  const addNewProduct = () => router.push("/product");
-  const { data: posts, mutate } = useSWR("/api/add", getData);
-  console.log(posts);
-
-  const handleDelete = async (id) => {
-    console.log("id", id);
-    const confirm = await letConfirm();
-    if (confirm) {
-      console.log("confirm");
-      const res = await fetch("api/add", {
-        method: "DELETE",
-        body: JSON.stringify({ public_id: id }),
-      });
-      console.log("res", res);
-      if (!res.ok) {
-        toast({
-          description: <p className="text-red-500">Deleting Post {id} Failed!</p>,
-        });
-      } else {
-        toast({
-          description: <p className="text-green-500">Successfully Deleted {id}</p>,
-        });
-      }
-      mutate(posts?.filter((e) => e.public_id !== id));
-    }
-  };
-
   return (
-    <main className="flex w-full h-full min-h-screen flex-col items-center justify-between p-24">
-      <Card className="flex w-[700px] p-5 flex-wrap gap-6">
-        <Card className="flex w-[200px] p-5">
-          <Button className="m-auto" variant={"link"} onClick={addNewBlog}>
-            Add New Blog
-          </Button>
-        </Card>
-        <Card className="flex w-[200px] p-5">
-          <Button className="m-auto" variant={"link"} onClick={addNewProduct}>
-            Goto Products
-          </Button>
-        </Card>
-        <Card className="flex w-[200px] p-5">
-          <Link className="m-auto" href={"/ml"} target="__blank">
-            Media Library
-          </Link>
-        </Card>
-      </Card>
-      <div className="flex flex-wrap gap-4 gap-y-20 mt-5">
-        {posts?.map((p: any, i: any) => (
-          <BlogCard key={i} metaData={p} handleDelete={handleDelete} />
-        ))}
+    <div className="container  flex justify-center items-center h-[100vh]">
+      <div className="bg-slate-800 rounded-xl p-10 ">
+        <p className="text-2xl tracking-tight font-bold pb-5 text-slate-300">
+          Select a Application
+        </p>
+        <div className="flex gap-10">
+          {APPS.map((app) => (
+            <div
+              tabIndex={0}
+              onClick={() => {
+                changeAppDetails(app);
+                router.replace("/home");
+              }}
+              key={app.id}
+              className="bg-slate-900 cursor-pointer h-[170px] w-[300px]  flex justify-center items-center rounded-xl"
+            >
+              {app?.logo ? (
+                <Image
+                  src={app.logo.src}
+                  height={180}
+                  width={300}
+                  className="rounded-lg object-contain"
+                  alt={app?.label}
+                />
+              ) : (
+                <p className="text-slate-300 tracking-tight font-bold text-3xl">{app.label}</p>
+              )}
+            </div>
+          ))}
+        </div>
       </div>
-    </main>
+    </div>
   );
-}
+};
+
+export default Page;

@@ -1,6 +1,6 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import React, { ChangeEvent } from "react";
+import React from "react";
 import { useRouter } from "next/navigation";
 import AddForm from "@/components/AddForm";
 import UploadImages from "@/components/UploadImages";
@@ -9,7 +9,7 @@ import SelectEditorType from "@/components/SelectEditorType";
 
 function AddNew() {
   const router = useRouter();
-  const goBack = () => router.push("/");
+  const goBack = () => router.push("/home");
 
   return (
     <div className="container py-5">
