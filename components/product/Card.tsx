@@ -42,7 +42,7 @@ function ProductCard({
           />
         </div>
       )}
-      <div className="absolute">
+      <div className="absolute opacity-0 hover:opacity-100">
         {permissions.edit && (
           <Link href={{ pathname: "/product/add", query: { data: JSON.stringify(card) } }}>
             <Button>
@@ -66,7 +66,9 @@ function ProductCard({
         )}
       </div>
 
-      <Image src={card.image} width={250} height={250} alt={card.title} className="rounded-md" />
+      <div className="relative w-[200px] h-[200px] overflow-hidden">
+        <Image src={card.image} width={250} height={250} alt={card.title} className="rounded-md" />
+      </div>
       <div className="p-2">
         <CardTitle className="h-[40px] overflow-hidden leading-5">{card.title}</CardTitle>
         <CardDescription>{currencyFormatter(card.price)}</CardDescription>

@@ -77,4 +77,5 @@ interface Iapps {
   label: string;
   logo?: StaticImageData;
   folder: string;
+  env: "PROD" | "DEV";
 }

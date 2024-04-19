@@ -20,15 +20,24 @@ export const IMAGE = "IMAGE";
 
 export const APPS: Iapps[] = [
   {
-    id: "buyingBird",
-    label: "Buying Bird",
+    id: "bestBuyer",
+    label: "Best Buyer",
     folder: "bb-admin",
     logo: BbImage,
+    env: "PROD",
   },
+
   {
     id: "geeksByNerd",
     label: "Geeks By Nerd",
     folder: "gbn-admin",
+    env: "PROD",
+  },
+  {
+    id: "bestBuyer",
+    label: "Best Buyer Dev",
+    folder: "bb-dev",
+    env: "DEV",
   },
 ];
 
@@ -174,7 +183,7 @@ export const EDITOR_FIELDS: EditorFields = {
   },
   features: {
     name: "features",
-    label: "List Down The Features",
+    label: "List Down The Features (check if it's a standout feature)",
     type: FEATURES,
     // initialvalue: FEATURE_INITIALVALUE,
     properties: Features_list,

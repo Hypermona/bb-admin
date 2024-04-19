@@ -26,9 +26,15 @@ const Page = (props: Props) => {
                 changeAppDetails(app);
                 router.replace("/home");
               }}
+              role="button"
               key={app.id}
-              className="bg-slate-900 cursor-pointer h-[170px] w-[300px]  flex justify-center items-center rounded-xl"
+              className="bg-slate-900 relative cursor-pointer h-[170px] w-[300px]  flex justify-center items-center rounded-xl"
             >
+              {app.env === "DEV" && (
+                <div className="top-0 right-0 px-5 py-1 rounded-tr-md rounded-bl-md bg-red-800 absolute">
+                  DEV
+                </div>
+              )}
               {app?.logo ? (
                 <Image
                   src={app.logo.src}

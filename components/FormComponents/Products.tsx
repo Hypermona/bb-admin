@@ -29,7 +29,7 @@ const AddSelected: React.FC<actionType> = ({ selected, onSubmit, clearSelected }
 const AddProductDialog = ({ onToggle, isOpen, onSubmit, preSelected }) => {
   return (
     <Dialog open={isOpen} onOpenChange={(open) => onToggle(open)}>
-      <DialogContent className="sm:max-w-[80vw] h-[95vh]">
+      <DialogContent className="sm:max-w-[80vw] h-[95vh] overflow-y-auto">
         <ProductList
           onSubmit={onSubmit}
           Action={AddSelected}

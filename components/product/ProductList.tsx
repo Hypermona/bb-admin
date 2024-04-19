@@ -18,20 +18,19 @@ type Props = {
 
 const ProductList = ({ Action, SubActions, productPermissions, onSubmit, preSelected }: Props) => {
   const advSearchRef = useRef("");
+  const [productData, setProductData] = useState<resProductFields[] | undefined>([]);
   const {
-    data: productData,
+    data: pData,
     isLoading,
     mutate,
-    isValidating,
   }: SWRResponse<resProductFields[], any, any> = useSWR<resProductFields[]>(
     "/api/product?q=" + advSearchRef.current,
     getData,
     { revalidateOnFocus: false }
   );
   useEffect(() => {
-    console.log("Iam recreated", preSelected);
-  }, [preSelected, productData]);
-  console.log("isValidating", isValidating);
+    setProductData(pData);
+  }, [pData]);
 
   const handleDelete = async (id) => {
     console.log("id", id);
@@ -70,8 +69,11 @@ const ProductList = ({ Action, SubActions, productPermissions, onSubmit, preSele
   };
 
   const onSearch = (data) => {
+    console.log(data?.title);
     advSearchRef.current = data?.title || "";
-    mutate();
+    setProductData(
+      (prev) => prev?.filter((p) => p?.title?.toLowerCase()?.includes(data?.title?.toLowerCase()))
+    );
   };
   const action = useMemo(
     () => (
@@ -88,15 +90,26 @@ const ProductList = ({ Action, SubActions, productPermissions, onSubmit, preSele
     ),
     [Action, SubActions, onSubmit, selected]
   );
+  const onPriceChange = (price) => {
+    if (!price) {
+      setProductData(pData);
+    }
+    const data = pData?.filter((e) => +e.price < +price);
+    console.log("pricemmmmmmmmmmmmm", price, data);
+
+    if (data?.length) {
+      setProductData(data);
+    }
+  };
   if (!isLoading) {
     return (
       <div>
         <Header
           title="Products List"
           Action={action}
-          Search={<AdvancedSearch onSubmit={onSearch} />}
+          Search={<AdvancedSearch onSubmit={onSearch} onPriceSearch={onPriceChange} />}
         />
-        <div className="flex gap-2 mt-[10px] p-[30px]">
+        <div className="flex flex-wrap gap-2 mt-[10px] p-[30px] h-full ">
           {productData?.map((data: resProductFields) => (
             <ProductCard
               handleDelete={handleDelete}

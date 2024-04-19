@@ -47,7 +47,10 @@ export default function Home() {
   return (
     <main className="flex w-full h-full min-h-screen flex-col items-center justify-between p-24 pt-12">
       <div className="bg-slate-900 cursor-pointer h-[100px] w-[100%] mb-5  flex justify-center items-center rounded-xl">
-        <p className="text-slate-300 tracking-tight font-bold text-3xl">{appDetails?.label}</p>
+        <p className="text-slate-300 tracking-tight font-bold text-3xl">{appDetails?.label}</p>{" "}
+        <Link href={"/"} className="align-bottom ml-3 underline">
+          Change
+        </Link>
       </div>
       <Card className="flex w-[700px] p-5 flex-wrap gap-6">
         <Card className="flex w-[200px] p-5">

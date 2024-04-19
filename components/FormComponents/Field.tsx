@@ -44,6 +44,7 @@ import useSWR from "swr";
 import MultipleSearchSelect from "../multipleSearchSelect";
 import AddFeature from "../addFeature";
 import ImageUrlUpload from "../ImageUrlUpload";
+import { Checkbox } from "../ui/checkbox";
 
 type Props = {
   field?: ControllerRenderProps<BlogOrProductCards, any>;
@@ -99,9 +100,18 @@ const RenderFeatures = ({ field, f }: Props) => {
           <div key={p.name} className="flex items-center mb-2 w-full">
             <FormLabel className="w-[200px]">{p.label}</FormLabel>
             <FormField
+              control={control}
+              name={`${f.name}.${p.name}.standout`}
+              render={({ field }) => (
+                <FormControl>
+                  <Checkbox checked={field.value} onCheckedChange={field.onChange} />
+                </FormControl>
+              )}
+            />
+            <FormField
               key={p.name}
               control={control}
-              name={`${f.name}.${p.name}`}
+              name={`${f.name}.${p.name}.value`}
               render={({ field }) =>
                 p.type === "select" ? (
                   <SelectSearch
