@@ -29,7 +29,7 @@ export const APPS: Iapps[] = [
 
   {
     id: "geeksByNerd",
-    label: "Geeks By Nerd",
+    label: "Geek For Nerds",
     folder: "gbn-admin",
     env: "PROD",
   },
@@ -57,6 +57,10 @@ const categoryOptions = [
   {
     value: "KITCHEN",
     label: "Kitchen Items",
+  },
+  {
+    value: "REFRIGERATOR",
+    label: "Refrigerator",
   },
 ];
 

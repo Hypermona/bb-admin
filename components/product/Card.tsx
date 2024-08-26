@@ -42,7 +42,7 @@ function ProductCard({
           />
         </div>
       )}
-      <div className="absolute opacity-0 hover:opacity-100">
+      <div className="absolute opacity-0 hover:opacity-100 z-10">
         {permissions.edit && (
           <Link href={{ pathname: "/product/add", query: { data: JSON.stringify(card) } }}>
             <Button>

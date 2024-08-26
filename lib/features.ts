@@ -77,11 +77,4 @@ export const Features_list = [
     placeholder: "Enter...",
     category: CATEGORIES.SMARTPHONE,
   },
-  {
-    name: "hello",
-    label: "Hello",
-    type: "text",
-    placeholder: "Enter...",
-    category: CATEGORIES.GIFT,
-  },
 ];
