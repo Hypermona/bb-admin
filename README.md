@@ -32,3 +32,20 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
+MAIN_FOLDER=bb-admin
+NEXT_PUBLIC_BASE_URL=https://bb-client-five.vercel.app/
+NEXT_APIKEY=***
+NEXT_AUTHDOMAIN="**".firebaseapp.com
+NEXT_PROJECTID="**"
+NEXT_STORAGEBUCKET="**".appspot.com
+NEXT_MESSAGINGSENDERID=0
+NEXT_APPID=***
+NEXT_MEASUREMENTID=***
+CLOUDINARY_CLOUD_NAME=***
+CLOUDINARY_API_KEY=***
+CLOUDINARY_API_SECRET=***
+FETCH_HOST=localhost:3000
+REVALIDATE_TOKEN=***
+NEXT_PUBLIC_CLIENT_URL=http://localhost:3000/
+CLIENT_URL=http://localhost:3000/
